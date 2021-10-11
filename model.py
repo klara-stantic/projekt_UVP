@@ -40,6 +40,10 @@ class Sklop_vaj:
     def dodaj_vajo(self, vaja):
         self.vaje.append(vaja)
 
+class Vaja:
+    def __init__(self, opis):
+        self.opis = opis
+
 class Zapisek:
     def __init__(self, datum, predmet, ucitelj, vsebina):
         self.datum = datum
