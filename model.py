@@ -4,21 +4,73 @@ from datetime import date
 class Model:
     def __init__(self):
         self.sklopi_vaj = []
+        self.aktualen_sklop = None
         self.oznake = []
+        self.aktualna_oznaka = None
         self.zapiski = []
+        self.aktualen_zapisek = None
         self.dogodki = []
+        self.aktualen_dogodek = None
+    
+    #SKLOPI VAJ
 
     def dodaj_sklop(self, sklop_vaj):
         self.sklopi_vaj.append(sklop_vaj)
+        if not self.aktualen_sklop:
+            self.aktualen_sklop = sklop_vaj
+    
+    def izbrisi_sklop(self, sklop):
+        self.sklopi_vaj.remove(sklop)
+
+    def zamenjaj_sklop(self, sklop):
+        self.aktualen_sklop = sklop
+        
+    def dodaj_vajo(self, vaja):
+        self.aktualen_sklop.dodaj_vajo(vaja)
+    
+    def izbrisi_vajo(self, vaja):
+        self.aktualen_sklop.izbrisi_vajo(vaja)
+    
+    #OZNAKE
     
     def dodaj_oznako(self, oznaka):
         self.oznake.append(oznaka)
+        if not self.aktualna_oznaka:
+            self.aktualna_oznaka = oznaka
+    
+    def izbrisi_oznako(self, oznaka):
+        self.oznake.remove(oznaka)
+    
+    def zamenjaj_oznako(self, oznaka):
+        self.aktualna_oznaka = oznaka
+    
+
+    
+    #ZAPISKI
 
     def dodaj_zapisek(self, nov_zapisek):
         self.zapiski.append(nov_zapisek)
+        if not self.aktualen_zapisek:
+            self.aktualen_zapisek = nov_zapisek
+    
+    def izbrisi_zapisek(self, zapisek):
+        self.zapiski.remove(zapisek)
+    
+    def zamenjaj_zapisek(self, zapisek):
+        self.aktualen_zapisek = zapisek
+    
+    #DOGODKI
 
     def dodaj_dogodek(self, dogodek):
         self.dogodki.append(dogodek)
+        if not self.aktualen_dogodek:
+            self.aktualen_dogodek = dogodek
+    
+    def izbrisi_dogodek(self, dogodek):
+        self.dogodki.remove(dogodek)
+
+    def zamenjaj_dogodek(self, dogodek):
+        self.aktualen_dogodek = dogodek
 
 #    def razmerje_po_kriteriju(self, kriterij): #manjka ti iteracija po vseh objektih novih razredov!!!
 #        selekcija_oznak = []
@@ -39,6 +91,12 @@ class Sklop_vaj:
 
     def dodaj_vajo(self, vaja):
         self.vaje.append(vaja)
+    
+    def izbrisi_vajo(self, vaja):
+        self.vaje.remove(vaja)
+
+    def stevilo_vaj(self):
+        return len(self.vaje)
 
 class Vaja:
     def __init__(self, opis):
@@ -63,16 +121,22 @@ class Oznaka:
 
     def dodaj_skladbo(self, skladba):
         self.skladbe.append(skladba)
+    
+    def izbrisi_skladbo(self, skladba):
+        self.skladbe.remove(vaja)
 
     def stevilo_skladb(self):
         return len(self.skladbe)
     
-    def razmerje(self):
+    def stevilo_naucenih(self):
         naucene = 0
         for skladba in self.skladbe:
            if skladba.nauceno:
                 naucene += 1 
-        procenti = (naucene * 100) / int(self.stevilo_skladb())
+        return naucene
+    
+    def razmerje(self):
+        procenti = (int(self.stevilo_naucenih()) * 100) / int(self.stevilo_skladb())
         return  f"{procenti:.3}%"
 
     
@@ -89,13 +153,15 @@ class Skladba:
         self.nauceno = True
 
 class Dogodek:
-    def __init__(self, kaj, kdaj, kje, skladbe=None, opombe=None):
+    def __init__(self, kaj, kdaj, kje, opombe=None):
         self.kaj = kaj
         self.kdaj = kdaj
         self.kje = kje
-        self.skladbe = skladbe
+        self.skladbe = []
         self.opombe = opombe
         
     def preteklost(self):
         return self.kdaj and self.kdaj < date.today()
-
+    
+    def dodaj_skladbo(self, skladba):
+        self.skladbe.append(skladba)
