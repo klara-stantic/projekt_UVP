@@ -20,15 +20,15 @@ class Model:
     def dodaj_dogodek(self, dogodek):
         self.dogodki.append(dogodek)
 
-    def razmerje_po_kriteriju(self, kriterij): #manjka ti iteracija po vseh objektih novih razredov!!!
-        selekcija_oznak = []
-        for oznaka in self.oznake:
-            if oznaka.mapa == kriterij:
-                selekcija_oznak += oznaka
-        slovar = {}
-        for oznaka in selekcija_oznak:
-            slovar[oznaka] = oznaka.stevilo_skladb() #lahko locis se naucene in nenaucene ko delas graf
-        return slovar       
+#    def razmerje_po_kriteriju(self, kriterij): #manjka ti iteracija po vseh objektih novih razredov!!!
+#        selekcija_oznak = []
+#        for oznaka in self.oznake:
+#            if oznaka.mapa == kriterij:
+#                selekcija_oznak += oznaka
+#        slovar = {}
+#        for oznaka in selekcija_oznak:
+#            slovar[oznaka] = oznaka.stevilo_skladb() #lahko locis se naucene in nenaucene ko delas graf
+#        return slovar       
 
 class Sklop_vaj:
     def __init__(self, ime, opis, opombe):
@@ -48,7 +48,7 @@ class Zapisek:
         self.vsebina = vsebina
         self.skladbe = []
 
-    def dodaj_skladbo(self, skladba):
+    def dodaj_skladbo_lekcija(self, skladba):
         self.skladbe.append(skladba)  
 
 class Oznaka:
