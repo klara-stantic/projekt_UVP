@@ -12,6 +12,17 @@ class Model:
         self.dogodki = []
         self.aktualen_dogodek = None
     
+    def __str__(self):
+        st_sklopov = len(self.sklopi_vaj)
+        st_zapiskov = len(self.zapiski)
+        st_dogodkov = len (self.dogodki)
+        st_oznak = len(self.oznake)
+        niz = f"""
+            Model, ki ima {st_sklopov} sklopov vaj, 
+            {st_dogodkov} dogodkov, {st_zapiskov} zapiskov 
+            in {st_oznak} oznak."""
+        return niz
+    
     #SKLOPI VAJ
 
     def dodaj_sklop(self, sklop_vaj):
@@ -83,11 +94,15 @@ class Model:
 #        return slovar       
 
 class Sklop_vaj:
-    def __init__(self, ime, opis, opombe):
+    def __init__(self, ime, opis):
         self.ime = ime
         self.opis = opis
-        self.opombe = opombe
         self.vaje = []
+    
+    def __str__(self):
+        st_vaj = len(self.vaje)
+        niz = f"Sklop {st_vaj} vaj"
+        return niz
 
     def dodaj_vajo(self, vaja):
         self.vaje.append(vaja)
@@ -109,6 +124,10 @@ class Zapisek:
         self.predmet = predmet
         self.vsebina = vsebina
         self.skladbe = []
+    
+    def __str__(self):
+        niz = f"""Zapisek lekcije {self.predmet} pri {self.ucitelj} iz dne {self.datum}"""
+        return niz
 
     def dodaj_skladbo_lekcija(self, skladba):
         self.skladbe.append(skladba)  
@@ -118,12 +137,16 @@ class Oznaka:
         self.ime = ime
         self.mapa = mapa #custom, obdobje, zasedba
         self.skladbe = []
+    
+    def __str__(self):
+        niz = f"Oznaka {self.ime} v mapi {self.mapa}"
+        return niz
 
     def dodaj_skladbo(self, skladba):
         self.skladbe.append(skladba)
     
     def izbrisi_skladbo(self, skladba):
-        self.skladbe.remove(vaja)
+        self.skladbe.remove(skladba)
 
     def stevilo_skladb(self):
         return len(self.skladbe)
@@ -141,13 +164,17 @@ class Oznaka:
 
     
 class Skladba:
-    def __init__(self, naslov, avtor, link=None, opombe=None, pazi=None):
+    def __init__(self, naslov, avtor, link=None):
         self.naslov = naslov
         self.avtor = avtor
         self.link = link
-        self.opombe = opombe
-        self.pazi = pazi
+        self.opombe = ""
+        self.pazi = ""
         self.nauceno = False
+    
+    def __str__(self):
+        niz = f"{self.naslov} avtorja {self.avtor}"
+        return niz
     
     def nauci_se(self):
         self.nauceno = True
@@ -159,6 +186,10 @@ class Dogodek:
         self.kje = kje
         self.skladbe = []
         self.opombe = opombe
+    
+    def __str__(self):
+        niz = "{self.kaj}"
+        return niz
         
     def preteklost(self):
         return self.kdaj and self.kdaj < date.today()
