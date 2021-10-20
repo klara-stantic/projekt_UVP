@@ -38,6 +38,7 @@ ZAKLJUCI_ZAPISEK = 33
 DODAJ_DOGODEK = 40
 POBRISI_DOGODEK = 41
 ZAMENJAJ_DOGODEK = 42
+DODAJ_SKLADBO_DOGODEK = 45
 #UREDI_DOGODEK = 44
 ZAKLJUCI_DOGODEK = 43
 
@@ -309,6 +310,58 @@ def zamenjaj_skladbo():
 def nauci_se():
     skladba = moj_model.aktualna_skladba
     skladba.nauci_se()
+
+
+def urejanje_dogodkov():
+    while True:
+        print(prikaz_dogodkov(moj_model))
+        if moj_model.aktualen_dogodek:
+            print("Aktualen dogodek: " +
+                  prikaz_dogodka(moj_model.aktualen_dogodek))
+        vnos = izberi_moznost([
+            (DODAJ_DOGODEK, "Dodaj dogodek"),
+            (POBRISI_DOGODEK, "Pobriši trenuten dogodek"),
+            (ZAMENJAJ_DOGODEK, "Zamenjaj trenuten dogodek"),
+            (DODAJ_SKLADBO_DOGODEK, "Trenutnemu dogodku dodaj skladbo"),
+            (ZAKLJUCI_DOGODEK, "Zaključi urejanje dogodkov"),
+        ])
+        if vnos == DODAJ_DOGODEK:
+            dodaj_dogodek()
+        elif vnos == POBRISI_DOGODEK:
+            pobrisi_dogodek()
+        elif vnos == ZAMENJAJ_DOGODEK:
+            zamenjaj_dogodek()
+        elif vnos == DODAJ_SKLADBO_DOGODEK:
+            dodaj_skladbo_dogodku()
+        elif vnos == ZAKLJUCI_DOGODEK:
+            break
+
+
+def dodaj_dogodek():
+    print("Vnesite podatke novega dogodka.")
+    kaj = input("Naslov: ")
+    kdaj = input("Datum: ")
+    kje = input("Lokacija: ")
+    opombe = input("Opombe: ")
+    nov_dogodek = Dogodek(kaj, kdaj, kje, opombe)
+    moj_model.dodaj_dogodek(nov_dogodek)
+
+
+def pobrisi_dogodek():
+    dogodek = moj_model.aktualen_dogodek
+    moj_model.izbrisi_dogodek(dogodek)
+
+
+def zamenjaj_dogodek():
+    print("Izberite dogodek, na katerega bi preklopili.")
+    dogodek = izberi_dogodek(moj_model)
+    moj_model.zamenjaj_dogodek(dogodek)
+
+
+def dodaj_skladbo_dogodku():
+    dogodek = moj_model.aktualen_dogodek
+    skladba = izberi_skladbo(moj_model)
+    dogodek.dodaj_skladbo(skladba)
 
 
 tekstovni_vmesnik()
