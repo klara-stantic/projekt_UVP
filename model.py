@@ -341,7 +341,7 @@ class Dogodek:
     def v_slovar(self):
         return {
             "kaj": self.kaj,
-            "kdaj": self.kdaj,
+            "kdaj": date.isoformat(self.kdaj),
             "kje": self.kje,
             "opombe": self.opombe,
             "skladbe": [skladba.v_slovar() for skladba in self.skladbe],
@@ -349,7 +349,7 @@ class Dogodek:
 
     @staticmethod
     def iz_slovarja(slovar):
-        dogodek = Dogodek(slovar["kaj"], slovar["kdaj"],
+        dogodek = Dogodek(slovar["kaj"], date.fromisoformat(slovar["kdaj"]),
                           slovar["kje"], slovar["opombe"])
         dogodek.skladbe = [
             Skladba.iz_slovarja(skladba_slovar) for skladba_slovar in slovar["skladbe"]
