@@ -7,8 +7,8 @@ class Model:
     def __init__(self):
         self.sklopi_vaj = []
         self.aktualen_sklop = None
-        self.oznake = []
-        self.aktualna_oznaka = None
+        self.skladbe = []
+        self.aktualna_skladba = None
         self.zapiski = []
         self.aktualen_zapisek = None
         self.dogodki = []
@@ -47,21 +47,33 @@ class Model:
     def stevilo_sklopov(self):
         return len(self.sklopi_vaj)
 
-    # OZNAKE
+    # SKLADBE
 
-    def dodaj_oznako(self, oznaka):
-        self.oznake.append(oznaka)
-        if not self.aktualna_oznaka:
-            self.aktualna_oznaka = oznaka
+    def dodaj_skladbo(self, skladba):
+        self.oznake.append(skladba)
+        if not self.aktualna_skladba:
+            self.aktualna_skladba = skladba
 
-    def izbrisi_oznako(self, oznaka):
-        self.oznake.remove(oznaka)
+    def izbrisi_skladbo(self, skladba):
+        self.oznake.remove(skladba)
 
-    def zamenjaj_oznako(self, oznaka):
-        self.aktualna_oznaka = oznaka
-    
-    def stevilo_oznak(self):
-        return len(self.oznake)
+    def zamenjaj_skladbo(self, skladba):
+        self.aktualna_skladba = skladba
+
+    def stevilo_skladb(self):
+        return len(self.skladbe)
+
+    def stevilo_naucenih(self):
+        naucene = 0
+        for skladba in self.skladbe:
+            if skladba.nauceno:
+                naucene += 1
+        return naucene
+
+    def razmerje(self):
+        procenti = (int(self.stevilo_naucenih()) * 100) / \
+            int(self.stevilo_skladb())
+        return f"{procenti:.3}%"
 
     # ZAPISKI
 
@@ -75,7 +87,7 @@ class Model:
 
     def zamenjaj_zapisek(self, zapisek):
         self.aktualen_zapisek = zapisek
-    
+
     def stevilo_zapiskov(self):
         return len(self.zapiski)
 
@@ -91,9 +103,16 @@ class Model:
 
     def zamenjaj_dogodek(self, dogodek):
         self.aktualen_dogodek = dogodek
-    
+
     def stevilo_dogodkov(self):
         return len(self.dogodki)
+
+    def stevilo_preteklih(self):
+        pretekli = []
+        for dogodek in self.dogodki:
+            if dogodek.preteklost():
+                pretekli.append(dogodek)
+        return len(pretekli)
 
 #    def razmerje_po_kriteriju(self, kriterij): #manjka ti iteracija po vseh objektih novih razredov!!!
 #        selekcija_oznak = []
@@ -115,9 +134,9 @@ class Model:
             "aktualen_dogodek": self.zapiski.index(self.aktualen_zapisek)
             if self.aktualen_zapisek
             else None,
-            "oznake": [oznaka.v_slovar() for oznaka in self.oznake],
-            "aktualen_dogodek": self.oznake.index(self.aktualna_oznaka)
-            if self.aktualna_oznaka
+            "skladbe": [skladba.v_slovar() for skladba in self.skladbe],
+            "aktualna_skladba": self.skladbe.index(self.aktualna_skladba)
+            if self.aktualna_skladba
             else None,
             "sklopi_vaj": [sklop_vaj.v_slovar() for sklop_vaj in self.sklopi_vaj],
             "aktualen_dogodek": self.sklopi_vaj.index(self.aktualen_sklop)
@@ -138,11 +157,11 @@ class Model:
         ]
         if slovar["aktualen_zapisek"] is not None:
             model.aktualen_zapisek = model.zapiski[slovar["aktualen_zapisek"]]
-        model.oznake = [
-            Oznaka.iz_slovarja(oznaka_slovar) for oznaka_slovar in slovar["oznake"]
+        model.skladbe = [
+            Skladba.iz_slovarja(skladba_slovar) for skladba_slovar in slovar["skladbe"]
         ]
-        if slovar["aktualna_oznaka"] is not None:
-            model.aktualna_oznaka = model.oznake[slovar["aktualna_oznaka"]]
+        if slovar["aktualna_skladba"] is not None:
+            model.aktualna_skladba = model.oznake[slovar["aktualna_skladba"]]
         model.sklopi_vaj = [
             Sklop_vaj.iz_slovarja(sklop_slovar) for sklop_slovar in slovar["sklopi_vaj"]
         ]
@@ -247,53 +266,41 @@ class Zapisek:
         return zapisek
 
 
-class Oznaka:
-    def __init__(self, ime, mapa):
-        self.ime = ime
-        self.mapa = mapa  # custom, obdobje, zasedba
-        self.skladbe = []
-
-    def __str__(self):
-        niz = f"Oznaka {self.ime} v mapi {self.mapa}"
-        return niz
-
-    def dodaj_skladbo(self, skladba):
-        self.skladbe.append(skladba)
-
-    def izbrisi_skladbo(self, skladba):
-        self.skladbe.remove(skladba)
-
-    def stevilo_skladb(self):
-        return len(self.skladbe)
-
-    def stevilo_naucenih(self):
-        naucene = 0
-        for skladba in self.skladbe:
-            if skladba.nauceno:
-                naucene += 1
-        return naucene
-
-    def razmerje(self):
-        procenti = (int(self.stevilo_naucenih()) * 100) / \
-            int(self.stevilo_skladb())
-        return f"{procenti:.3}%"
-
-    def v_slovar(self):
-        return {
-            "ime": self.ime,
-            "mapa": self.mapa,
-            "skladbe": [
-                skladba.v_slovar() for skladba in self.skladbe
-            ],
-        }
-
-    @staticmethod
-    def iz_slovarja(slovar):
-        oznaka = Oznaka(slovar["ime"], slovar["mapa"])
-        oznaka.skladbe = [
-            Skladba.iz_slovarja(skladba_slovar) for skladba_slovar in slovar["skladbe"]
-        ]
-        return oznaka
+# class Oznaka:
+#    def __init__(self, ime, mapa):
+#        self.ime = ime
+#        self.mapa = mapa  # custom, obdobje, zasedba
+#        self.skladbe = []
+#
+#    def __str__(self):
+#        niz = f"Oznaka {self.ime} v mapi {self.mapa}"
+#        return niz
+#
+#    def dodaj_skladbo(self, skladba):
+#        self.skladbe.append(skladba)
+#
+#    def izbrisi_skladbo(self, skladba):
+#        self.skladbe.remove(skladba)
+#
+#    def stevilo_skladb(self):
+#        return len(self.skladbe)
+#
+#    def v_slovar(self):
+#        return {
+#            "ime": self.ime,
+#            "mapa": self.mapa,
+#            "skladbe": [
+#                skladba.v_slovar() for skladba in self.skladbe
+#            ],
+#        }
+#
+#    @staticmethod
+#    def iz_slovarja(slovar):
+#        oznaka = Oznaka(slovar["ime"], slovar["mapa"])
+#        oznaka.skladbe = [
+#            Skladba.iz_slovarja(skladba_slovar) for skladba_slovar in slovar["skladbe"]
+#        ]
+#        return oznaka
 
 
 class Skladba:
@@ -304,6 +311,7 @@ class Skladba:
         self.opombe = ""
         self.pazi = ""
         self.nauceno = False
+        self.oznake = []
 
     def __str__(self):
         niz = f"{self.naslov} avtorja {self.avtor}"
@@ -320,6 +328,7 @@ class Skladba:
             "opombe": self.opombe,
             "pazi": self.pazi,
             "nauceno": self.nauceno,
+            "oznake": self.oznake,
         }
 
     @staticmethod
@@ -329,6 +338,7 @@ class Skladba:
         skladba.pazi = slovar["pazi"]
         skladba.opombe = slovar["opombe"]
         skladba.nauceno = slovar["nauceno"]
+        skladba.oznake = slovar["oznake"]
         return skladba
 
 
