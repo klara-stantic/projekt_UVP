@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, time
 import json
 #import calendar
 
@@ -50,12 +50,12 @@ class Model:
     # SKLADBE
 
     def dodaj_skladbo(self, skladba):
-        self.oznake.append(skladba)
+        self.skladbe.append(skladba)
         if not self.aktualna_skladba:
             self.aktualna_skladba = skladba
 
     def izbrisi_skladbo(self, skladba):
-        self.oznake.remove(skladba)
+        self.skladbe.remove(skladba)
 
     def zamenjaj_skladbo(self, skladba):
         self.aktualna_skladba = skladba
@@ -161,7 +161,7 @@ class Model:
             Skladba.iz_slovarja(skladba_slovar) for skladba_slovar in slovar["skladbe"]
         ]
         if slovar["aktualna_skladba"] is not None:
-            model.aktualna_skladba = model.oznake[slovar["aktualna_skladba"]]
+            model.aktualna_skladba = model.skladbe[slovar["aktualna_skladba"]]
         model.sklopi_vaj = [
             Sklop_vaj.iz_slovarja(sklop_slovar) for sklop_slovar in slovar["sklopi_vaj"]
         ]
@@ -343,9 +343,10 @@ class Skladba:
 
 
 class Dogodek:
-    def __init__(self, kaj, kdaj, kje, opombe=None):
+    def __init__(self, kaj, kdaj, ura, kje, opombe=None):
         self.kaj = kaj
         self.kdaj = kdaj
+        self.ura = ura
         self.kje = kje
         self.skladbe = []
         self.opombe = opombe
@@ -355,7 +356,7 @@ class Dogodek:
         return niz
 
     def preteklost(self):
-        return self.kdaj and self.kdaj < date.today()
+        return self.kdaj and date.fromisoformat(self.kdaj) < date.today()
 
     def dodaj_skladbo(self, skladba):
         self.skladbe.append(skladba)
@@ -363,7 +364,8 @@ class Dogodek:
     def v_slovar(self):
         return {
             "kaj": self.kaj,
-            "kdaj": date.isoformat(self.kdaj),
+            "kdaj": self.kdaj,
+            "ura": self.ura,
             "kje": self.kje,
             "opombe": self.opombe,
             "skladbe": [skladba.v_slovar() for skladba in self.skladbe],
@@ -371,7 +373,7 @@ class Dogodek:
 
     @staticmethod
     def iz_slovarja(slovar):
-        dogodek = Dogodek(slovar["kaj"], date.fromisoformat(slovar["kdaj"]),
+        dogodek = Dogodek(slovar["kaj"], slovar["kdaj"], slovar["cas"],
                           slovar["kje"], slovar["opombe"])
         dogodek.skladbe = [
             Skladba.iz_slovarja(skladba_slovar) for skladba_slovar in slovar["skladbe"]

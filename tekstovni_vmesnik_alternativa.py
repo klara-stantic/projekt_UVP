@@ -1,4 +1,5 @@
 from model import Model, Dogodek, Zapisek, Sklop_vaj, Vaja, Skladba
+import datetime
 
 DATOTEKA = "model.json"
 try:
@@ -340,11 +341,34 @@ def urejanje_dogodkov():
 def dodaj_dogodek():
     print("Vnesite podatke novega dogodka.")
     kaj = input("Naslov: ")
-    kdaj = input("Datum: ")
+    while True:
+        datum = input("Datum: ")
+        if preverjanje_formata(datum) or not datum:
+                kdaj = datum
+                break
+        else:
+            print("Napačen format. Datum mora biti formata LLLL-MM-DD")
+    while True:
+        ura = input("Ura: ")
+        if preverjanje_formata(ura, "%H:%M") or not ura:
+                cas = ura
+                break
+        else:
+            print("Napačen format. Datum mora biti formata HH:MM")    
     kje = input("Lokacija: ")
     opombe = input("Opombe: ")
-    nov_dogodek = Dogodek(kaj, kdaj, kje, opombe)
+    nov_dogodek = Dogodek(kaj, kdaj, cas, kje, opombe)
     moj_model.dodaj_dogodek(nov_dogodek)
+
+ 
+def preverjanje_formata(vnos, format="%Y-%m-%d"):
+    niz = str(vnos)
+    try:
+        datetime.datetime.strptime(niz, format)
+        return True
+    except ValueError:
+        return False
+        print("Napačen format. Datum mora biti formata LLLL-MM-DD HH:MM")
 
 
 def pobrisi_dogodek():
@@ -359,9 +383,12 @@ def zamenjaj_dogodek():
 
 
 def dodaj_skladbo_dogodku():
-    dogodek = moj_model.aktualen_dogodek
-    skladba = izberi_skladbo(moj_model)
-    dogodek.dodaj_skladbo(skladba)
+    if moj_model.skladbe:
+        dogodek = moj_model.aktualen_dogodek
+        skladba = izberi_skladbo(moj_model)
+        dogodek.dodaj_skladbo(skladba)
+    else:
+        print("Žal v tvoji zbirki še ni skladb.")
 
 
 tekstovni_vmesnik()
