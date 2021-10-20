@@ -1,4 +1,4 @@
-from model import Model, Dogodek, Zapisek, Sklop_vaj, Vaja, Skladba, Oznaka
+from model import Model, Dogodek, Zapisek, Sklop_vaj, Vaja, Skladba
 
 DATOTEKA = "model.json"
 try:
@@ -31,7 +31,7 @@ def preberi_stevilo():
             print("Vnesti morate število.")
 
 
-def izberi_ukaz(moznosti):
+def izberi_moznost(moznosti):
     """Uporabniku našteje možnosti ter vrne izbrano."""
     for i, (_moznost, opis) in enumerate(moznosti, 1):
         print(f"{i}) {opis}")
@@ -86,7 +86,15 @@ def prikaz_sklopov(model):
 
 
 def prikaz_sklopa(sklop):
-    return f"sklop.ime"
+    vaje = sklop.stevilo_vaj()
+    if sklop.vaje:
+        return f"VAJE: {vaje}"
+    else:
+        return "Ta sklop nima vaj."
+
+
+def prikaz_vaje(vaja):
+    return f"{vaja.opis}"
 
 
 def prikaz_skladb(model):
@@ -115,14 +123,28 @@ def prikazi_vsebino(model):
 # IZBIRE
 
 
-def
+def izberi_dogodek(model):
+    return izberi_moznost([(dogodek, prikaz_dogodka(dogodek)) for dogodek in model.dogodki])
+
+def izberi_zapisek(model):
+    return izberi_moznost([(zapisek, kratek_prikaz_zapiska(zapisek)) for zapisek in model.zapiski])
+
+def izberi_sklop(model):
+    return izberi_moznost([(sklop, prikaz_sklopa(sklop)) for sklop in model.sklopi_vaj])
+
+def izberi_vajo(sklop):
+    return izberi_moznost([(vaja, prikaz_vaje(vaja)) for vaja in sklop.vaje])
+
+def izberi_skladbo(model):
+    return izberi_moznost([(skladba, prikaz_skladbe(skladba)) for skladba in model.skladbe])
+
 
 
 def tekstovni_vmesnik():
     pozdravi()
     while True:
         prikazi_vsebino(moj_model)
-        vnos = izberi_ukaz([
+        vnos = izberi_moznost([
             (DODAJ_SKLOP, "Dodaj sklop vaj"),
             (DODAJ_OZNAKO, "Dodaj oznako"),
             (DODAJ_ZAPISEK, "Dodaj zapisek iz lekcije"),
