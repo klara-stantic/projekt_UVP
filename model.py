@@ -1,4 +1,5 @@
 from datetime import date
+import json
 #import calendar
 
 
@@ -136,6 +137,17 @@ class Model:
         if slovar["aktualen_sklop"] is not None:
             model.aktualen_sklop = model.sklopi_vaj[slovar["aktualen_sklop"]]
         return model
+
+    def shrani_v_datoteko(self, ime_datoteke):
+        with open(ime_datoteke, "w") as dat:
+            slovar = self.v_slovar()
+            json.dump(slovar, dat)
+
+    @staticmethod
+    def preberi_iz_datoteke(ime_datoteke):
+        with open(ime_datoteke) as dat:
+            slovar = json.load(dat)
+            return Model.iz_slovarja(slovar)
 
 
 class Sklop_vaj:
