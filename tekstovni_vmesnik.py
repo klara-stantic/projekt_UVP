@@ -132,8 +132,8 @@ def izberi_zapisek(model):
 def izberi_sklop(model):
     return izberi_moznost([(sklop, prikaz_sklopa(sklop)) for sklop in model.sklopi_vaj])
 
-def izberi_vajo(sklop):
-    return izberi_moznost([(vaja, prikaz_vaje(vaja)) for vaja in sklop.vaje])
+def izberi_vajo(model):
+    return izberi_moznost([(vaja, prikaz_vaje(vaja)) for vaja in model.aktualen_sklop.vaje])
 
 def izberi_skladbo(model):
     return izberi_moznost([(skladba, prikaz_skladbe(skladba)) for skladba in model.skladbe])
