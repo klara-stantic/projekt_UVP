@@ -44,6 +44,9 @@ class Model:
     def izbrisi_vajo(self, vaja):
         self.aktualen_sklop.izbrisi_vajo(vaja)
 
+    def stevilo_sklopov(self):
+        return len(self.sklopi_vaj)
+
     # OZNAKE
 
     def dodaj_oznako(self, oznaka):
@@ -56,6 +59,9 @@ class Model:
 
     def zamenjaj_oznako(self, oznaka):
         self.aktualna_oznaka = oznaka
+    
+    def stevilo_oznak(self):
+        return len(self.oznake)
 
     # ZAPISKI
 
@@ -69,6 +75,9 @@ class Model:
 
     def zamenjaj_zapisek(self, zapisek):
         self.aktualen_zapisek = zapisek
+    
+    def stevilo_zapiskov(self):
+        return len(self.zapiski)
 
     # DOGODKI
 
@@ -82,6 +91,9 @@ class Model:
 
     def zamenjaj_dogodek(self, dogodek):
         self.aktualen_dogodek = dogodek
+    
+    def stevilo_dogodkov(self):
+        return len(self.dogodki)
 
 #    def razmerje_po_kriteriju(self, kriterij): #manjka ti iteracija po vseh objektih novih razredov!!!
 #        selekcija_oznak = []
