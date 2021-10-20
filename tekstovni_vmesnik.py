@@ -57,6 +57,11 @@ def prikaz_dogodkov():
     else:
         return "Ni dogodkov."
 
+def prikaz_dogodka(dogodek):
+    if dogodek.preteklost():
+        return f"{dogodek.kaj} - pretekel"
+    else:
+        return f"{dogodek.kaj} - {dogodek.kdaj}"
 
 def prikaz_zapiskov():
     stevilo = moj_model.stevilo_zapiskov()
@@ -64,6 +69,9 @@ def prikaz_zapiskov():
         return f"ZAPISKI: {stevilo}"
     else:
         return "Ni zapiskov."
+
+def kratek_prikaz_zapiska(zapisek):
+    return f"{zapisek.predmet}, {zapisek.datum}"
 
 
 def prikaz_sklopov():
@@ -73,6 +81,8 @@ def prikaz_sklopov():
     else:
         return "Ni sklopov vaj."
 
+def prikaz_sklopa(sklop):
+    return f"sklop.ime"
 
 def prikaz_skladb():
     stevilo = moj_model.stevilo_skladb()
@@ -83,6 +93,12 @@ def prikaz_skladb():
                 f"Naučene: {naucene} ({procenti})")
     else:
         return "Ni skladb."
+
+def prikaz_skladbe(skladba):
+    if skladba.nauceno:
+        return f"{skladba.naslov}, {skladba.avtor} - naučena"
+    else:
+        return f"{skladba.naslov}, {skladba.avtor}"
 
 
 def prikazi_vsebino():
