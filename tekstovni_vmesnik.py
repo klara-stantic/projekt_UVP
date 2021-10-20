@@ -46,16 +46,17 @@ def izberi_ukaz(moznosti):
 
 # PRIKAZOVANJE OBJEKTOV
 
-def prikaz_dogodkov():
-    vsi = moj_model.stevilo_dogodkov()
-    pretekli = moj_model.stevilo_preteklih()
-    if moj_model.dogodki:
-        if moj_model.stevilo_preteklih() > 0:
+def prikaz_dogodkov(model):
+    vsi = model.stevilo_dogodkov()
+    pretekli = model.stevilo_preteklih()
+    if model.dogodki:
+        if model.stevilo_preteklih() > 0:
             return (f"DOGODKI: {vsi}\n" + f"Pretekli: {pretekli}")
         else:
             return f"DOGODKI: {vsi}"
     else:
         return "Ni dogodkov."
+
 
 def prikaz_dogodka(dogodek):
     if dogodek.preteklost():
@@ -63,36 +64,41 @@ def prikaz_dogodka(dogodek):
     else:
         return f"{dogodek.kaj} - {dogodek.kdaj}"
 
-def prikaz_zapiskov():
-    stevilo = moj_model.stevilo_zapiskov()
-    if moj_model.zapiski:
+
+def prikaz_zapiskov(model):
+    stevilo = model.stevilo_zapiskov()
+    if model.zapiski:
         return f"ZAPISKI: {stevilo}"
     else:
         return "Ni zapiskov."
+
 
 def kratek_prikaz_zapiska(zapisek):
     return f"{zapisek.predmet}, {zapisek.datum}"
 
 
-def prikaz_sklopov():
-    stevilo = moj_model.stevilo_sklopov()
-    if moj_model.sklopi_vaj:
+def prikaz_sklopov(model):
+    stevilo = model.stevilo_sklopov()
+    if model.sklopi_vaj:
         return f"SKLOPI VAJ: {stevilo}"
     else:
         return "Ni sklopov vaj."
 
+
 def prikaz_sklopa(sklop):
     return f"sklop.ime"
 
-def prikaz_skladb():
-    stevilo = moj_model.stevilo_skladb()
-    naucene = moj_model.stevilo_naucenih()
-    if moj_model.skladbe:
-        procenti = moj_model.razmerje()
+
+def prikaz_skladb(model):
+    stevilo = model.stevilo_skladb()
+    naucene = model.stevilo_naucenih()
+    if model.skladbe:
+        procenti = model.razmerje()
         return (f"SKLADBE: {stevilo}\n" +
                 f"Naučene: {naucene} ({procenti})")
     else:
         return "Ni skladb."
+
 
 def prikaz_skladbe(skladba):
     if skladba.nauceno:
@@ -101,16 +107,21 @@ def prikaz_skladbe(skladba):
         return f"{skladba.naslov}, {skladba.avtor}"
 
 
-def prikazi_vsebino():
-    niz = (prikaz_dogodkov() + "\n" + prikaz_zapiskov() +
-           "\n" + prikaz_sklopov() + "\n" + prikaz_skladb())
+def prikazi_vsebino(model):
+    niz = (prikaz_dogodkov(model) + "\n" + prikaz_zapiskov(model) +
+           "\n" + prikaz_sklopov(model) + "\n" + prikaz_skladb(model))
     return niz
+
+# IZBIRE
+
+
+def
 
 
 def tekstovni_vmesnik():
     pozdravi()
     while True:
-        prikazi_vsebino()
+        prikazi_vsebino(moj_model)
         vnos = izberi_ukaz([
             (DODAJ_SKLOP, "Dodaj sklop vaj"),
             (DODAJ_OZNAKO, "Dodaj oznako"),
