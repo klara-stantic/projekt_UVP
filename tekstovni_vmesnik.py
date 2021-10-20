@@ -7,30 +7,30 @@ except FileNotFoundError:
     moj_model = Model()
 
 
-#MOZNOSTI
+# MOZNOSTI
 
-DODAJ_SKLOP = 1
+DODAJ_SKLOP = 10
 POBRISI_SKLOP = 11
 ZAMENJAJ_SKLOP = 12
 UREDI_SKLOP = 13
 
-DODAJ_SKLADBO = 2
+DODAJ_SKLADBO = 20
 POBRISI_SKLADBO = 21
 ZAMENJAJ_SKLADBO = 22
 UREDI_SKLADBO = 23
-NAUČI_SE = 24
+NAUCI_SE = 24
 
-DODAJ_ZAPISEK = 3
+DODAJ_ZAPISEK = 30
 POBRISI_ZAPISEK = 31
 ZAMENJAJ_ZAPISEK = 32
 UREDI_ZAPISEK = 33
 
-DODAJ_DOGODEK = 4
+DODAJ_DOGODEK = 40
 POBRISI_DOGODEK = 41
 ZAMENJAJ_DOGODEK = 42
 UREDI_DOGODEK = 43
 
-DODAJ_VAJO = 5
+DODAJ_VAJO = 50
 POBRISI_VAJO = 51
 ZAMENJAJ_VAJO = 52
 UREDI_VAJO = 53
@@ -159,6 +159,8 @@ def izberi_vajo(model):
 def izberi_skladbo(model):
     return izberi_moznost([(skladba, prikaz_skladbe(skladba)) for skladba in model.skladbe])
 
+# TEKSTOVNI VMESNIK
+
 
 def tekstovni_vmesnik():
     pozdravi()
@@ -166,47 +168,81 @@ def tekstovni_vmesnik():
         prikazi_vsebino(moj_model)
         vnos = izberi_moznost([
             (DODAJ_SKLOP, "Dodaj sklop vaj"),
-            (DODAJ_OZNAKO, "Dodaj oznako"),
+            (POBRISI_SKLOP, "Pobriši sklop vaj"), 
+            (ZAMENJAJ_SKLOP), "Zamenjaj sklop",
+            (UREDI_SKLOP), "Uredi sklop",
+            
             (DODAJ_ZAPISEK, "Dodaj zapisek iz lekcije"),
+            (POBRISI_ZAPISEK, "Pobriši zapisek"),
+            (ZAMENJAJ_ZAPISEK, "Zamenjaj zapisek"),
+            (UREDI_ZAPISEK, "Uredi zapisek"),
+            
             (DODAJ_DOGODEK, "Dodaj dogodek"),
+            (POBRISI_DOGODEK, "Pobriši dogodek"),
+            (ZAMENJAJ_DOGODEK, "Zamenjaj dogodek"),
+            (UREDI_DOGODEK, "Uredi dogodek"),
+            
             (DODAJ_VAJO, "Dodaj vajo"),
+            (POBRISI_VAJO, "Pobriši vajo"),
+            (ZAMENJAJ_VAJO, "Zamenjaj vajo"),
+            (UREDI_VAJO, "Uredi vajo"),
+            
             (DODAJ_SKLADBO, "Dodaj skladbo"),
-            (ST_SKLADB, "Prikazi stevilo skladb"),
-            (RAZMERJE_NAUCENIH_SKLADB,
-             "Prikazi razmerje med naucenimi in nenaucenimi skladbami"),
+            (POBRISI_SKLADBO, "Pobriši skladbo"),
+            (ZAMENJAJ_SKLADBO, "Zamenjaj skladbo"),
+            (UREDI_SKLADBO, "Uredi skladbo"),
             (NAUCI_SE, "Nauci se skladbo"),
-            (DODAJ_SKLADBO_LEKCIJA, "Dodaj skladbo v lekcijo"),
-            (PRETEKLOST, "Preveri, ce je dogodek ze pretekel"),
+            
             (ZAKLJUCI, "Zakljuci"),
         ])
         if vnos == DODAJ_SKLOP:
             dodaj_sklop()
-        elif vnos == DODAJ_OZNAKO:
-            dodaj_oznako()
+        elif vnos == POBRISI_SKLOP:
+            pobrisi_sklop()
+        elif vnos == ZAMENJAJ_SKLOP:
+            zamenjaj_sklop()
+        elif vnos == UREDI_SKLOP:
+            uredi_sklop()
         elif vnos == DODAJ_ZAPISEK:
             dodaj_zapisek()
+        elif vnos == POBRISI_ZAPISEK:
+            pobrisi_zapisek()
+        elif vnos == ZAMENJAJ_ZAPISEK:
+            zamenjaj_zapisek()
+        elif vnos == UREDI_ZAPISEK:
+            uredi_zapisek()
         elif vnos == DODAJ_DOGODEK:
             dodaj_dogodek()
+        elif vnos == POBRISI_DOGODEK:
+            pobrisi_dogodek()
+        elif vnos == ZAMENJAJ_DOGODEK:
+            zamenjaj_dogodek()
+        elif vnos == UREDI_DOGODEK:
+            uredi_dogodek()
         elif vnos == DODAJ_VAJO:
             dodaj_vajo()
+        elif vnos == POBRISI_VAJO:
+            pobrisi_vajo()
+        elif vnos == ZAMENJAJ_VAJO:
+            zamenjaj_vajo()
+        elif vnos == UREDI_VAJO:
+            uredi_vajo()
         elif vnos == DODAJ_SKLADBO:
             dodaj_skladbo()
-        elif vnos == ST_SKLADB:
-            st_skladb()
-        elif vnos == RAZMERJE_NAUCENIH_SKLADB:
-            razmerje_naucenih_skladb()
+        elif vnos == POBRISI_SKLADBO:
+            pobrisi_skladbo()
+        elif vnos == ZAMENJAJ_SKLADBO:
+            zamenjaj_skladbo()
+        elif vnos == UREDI_SKLADBO:
+            uredi_skladbo()
         elif vnos == NAUCI_SE:
             nauci_se()
-        elif vnos == DODAJ_SKLADBO_LEKCIJA:
-            dodaj_skladbo_lekcija()
-        elif vnos == PRETEKLOST:
-            preteklost()
         elif vnos == ZAKLJUCI:
             moj_model.shrani_v_datoteko(DATOTEKA)
             print("Nasvidenje!")
             break
 
-
+#POMOZNE FUNKCIJE:
 def pozdravi():
     print("Pozdravljeni v svoji beležki!")
 
@@ -219,12 +255,13 @@ def dodaj_sklop():
     moj_model.dodaj_sklop(nov_sklop)
 
 
-def dodaj_oznako():
-    print("Vnesi podatke za novo oznako!")
-    ime = input("Ime: ")
-    mapa = input("Mapa: ")
-    nova_oznaka = Oznaka(ime, mapa)
-    moj_model.dodaj_oznako(nova_oznaka)
+
+def dodaj_skladbo():
+    print("Vnesi podatke za novo skladbo!")
+    naslov = input("Naslov: ")
+    avtor = input("Avtor: ")
+    nova_skladba = Skladba(naslov, avtor)
+    moj_model.dodaj_skladbo(nova_skladba)
 
 
 def dodaj_dogodek():
