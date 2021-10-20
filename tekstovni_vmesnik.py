@@ -31,7 +31,7 @@ def preberi_stevilo():
             print("Vnesti morate število.")
 
 
-def izberi_moznost(moznosti):
+def izberi_ukaz(moznosti):
     """Uporabniku našteje možnosti ter vrne izbrano."""
     for i, (_moznost, opis) in enumerate(moznosti, 1):
         print(f"{i}) {opis}")
@@ -42,6 +42,53 @@ def izberi_moznost(moznosti):
             return moznost
         else:
             print(f"Vnesti morate število med 1 in {len(moznosti)}.")
+
+
+# PRIKAZOVANJE OBJEKTOV
+
+def prikaz_dogodkov():
+    vsi = moj_model.stevilo_dogodkov()
+    pretekli = moj_model.stevilo_preteklih()
+    if moj_model.dogodki:
+        if moj_model.stevilo_preteklih() > 0:
+            return (f"DOGODKI: {vsi}\n" + f"Pretekli: {pretekli}")
+        else:
+            return f"DOGODKI: {vsi}"
+    else:
+        return "Ni dogodkov."
+
+
+def prikaz_zapiskov():
+    stevilo = moj_model.stevilo_zapiskov()
+    if moj_model.zapiski:
+        return f"ZAPISKI: {stevilo}"
+    else:
+        return "Ni zapiskov."
+
+
+def prikaz_sklopov():
+    stevilo = moj_model.stevilo_sklopov()
+    if moj_model.sklopi_vaj:
+        return f"SKLOPI VAJ: {stevilo}"
+    else:
+        return "Ni sklopov vaj."
+
+
+def prikaz_skladb():
+    stevilo = moj_model.stevilo_skladb()
+    naucene = moj_model.stevilo_naucenih()
+    if moj_model.skladbe:
+        procenti = moj_model.razmerje()
+        return (f"SKLADBE: {stevilo}\n" +
+                f"Naučene: {naucene} ({procenti})")
+    else:
+        return "Ni skladb."
+
+
+def prikazi_vsebino():
+    niz = (prikaz_dogodkov() + "\n" + prikaz_zapiskov() +
+           "\n" + prikaz_sklopov() + "\n" + prikaz_skladb())
+    return niz
 
 
 def tekstovni_vmesnik():
