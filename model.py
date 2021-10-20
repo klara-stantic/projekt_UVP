@@ -131,7 +131,7 @@ class Model:
             if self.aktualen_dogodek
             else None,
             "zapiski": [zapisek.v_slovar() for zapisek in self.zapiski],
-            "aktualen_dogodek": self.zapiski.index(self.aktualen_zapisek)
+            "aktualen_zapisek": self.zapiski.index(self.aktualen_zapisek)
             if self.aktualen_zapisek
             else None,
             "skladbe": [skladba.v_slovar() for skladba in self.skladbe],
@@ -139,8 +139,8 @@ class Model:
             if self.aktualna_skladba
             else None,
             "sklopi_vaj": [sklop_vaj.v_slovar() for sklop_vaj in self.sklopi_vaj],
-            "aktualen_dogodek": self.sklopi_vaj.index(self.aktualen_sklop)
-            if self.aktualen_sklop
+            "aktualen_sklop": self.sklopi_vaj.index(self.aktualen_sklop) 
+            if self.aktualen_sklop 
             else None,
         }
 
