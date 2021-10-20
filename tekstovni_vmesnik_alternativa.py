@@ -125,7 +125,7 @@ def prikaz_skladb(model):
     if model.skladbe:
         procenti = model.razmerje()
         return (f"SKLADBE: {stevilo}\n" +
-                f"Naučene: {naucene} ({procenti})")
+                f" - Naučene: {naucene} ({procenti})")
     else:
         return "Ni skladb."
 
@@ -202,7 +202,8 @@ def pozdravi():
 def urejanje_sklopov():
     while True:
         print(prikaz_sklopov(moj_model))
-        print("Aktualen sklop: " + prikaz_sklopa(moj_model.aktualen_sklop))
+        if moj_model.aktualen_sklop:
+            print("Aktualen sklop: " + prikaz_sklopa(moj_model.aktualen_sklop))
         vnos = izberi_moznost([
             (DODAJ_SKLOP, "Dodaj sklop vaj"),
             (POBRISI_SKLOP, "Pobriši trenuten sklop vaj"),
@@ -259,6 +260,55 @@ def pobrisi_vajo():
 # def uredi_vajo():
 #    print("Izberite vajo, ki bi jo radi uredili.")
 #    vaja = izberi_vajo(moj_model)
+
+
+def urejanje_skladb():
+    while True:
+        print(prikaz_skladb(moj_model))
+        if moj_model.aktualna_skladba:
+            print("Aktualna skladba: " +
+                  prikaz_skladbe(moj_model.aktualna_skladba))
+        vnos = izberi_moznost([
+            (DODAJ_SKLADBO, "Dodaj skladbo"),
+            (POBRISI_SKLADBO, "Pobriši trenutno skladbo"),
+            (ZAMENJAJ_SKLADBO, "Zamenjaj trenutnoskladbo"),
+            (NAUCI_SE, "Nauči se trenutno skladbo"),
+            (ZAKLJUCI_SKLADBO, "Zakljuci urejanje skladb"),
+        ])
+        if vnos == DODAJ_SKLADBO:
+            dodaj_skladbo()
+        elif vnos == POBRISI_SKLADBO:
+            pobrisi_skladbo()
+        elif vnos == ZAMENJAJ_SKLADBO:
+            zamenjaj_skladbo()
+        elif vnos == NAUCI_SE:
+            nauci_se()
+        elif vnos == ZAKLJUCI_SKLADBO:
+            break
+
+
+def dodaj_skladbo():
+    print("Vnesite podatke nove skladbe.")
+    naslov = input("Naslov: ")
+    avtor = input("Avtor: ")
+    nova_skladba = Skladba(naslov, avtor)
+    moj_model.dodaj_skladbo(nova_skladba)
+
+
+def pobrisi_skladbo():
+    skladba = moj_model.aktualna_skladba
+    moj_model.izbrisi_skladbo(skladba)
+
+
+def zamenjaj_skladbo():
+    print("Izberite skladbo, na katero bi preklopili.")
+    skladba = izberi_skladbo(moj_model)
+    moj_model.zamenjaj_skladbo(skladba)
+
+
+def nauci_se():
+    skladba = moj_model.aktualna_skladba
+    skladba.nauci_se()
 
 
 tekstovni_vmesnik()
