@@ -1,6 +1,11 @@
 from model import Model, Dogodek, Zapisek, Sklop_vaj, Vaja, Skladba, Oznaka
 
-model = Model()
+DATOTEKA = "model.json"
+try:
+    moj_model = Model.preberi_iz_datoteke(DATOTEKA)
+except FileNotFoundError:
+    moj_model = Model()
+
 
 DODAJ_SKLOP = 1
 DODAJ_OZNAKO = 2
@@ -15,6 +20,30 @@ DODAJ_SKLADBO_LEKCIJA = 10
 PRETEKLOST = 11
 ZAKLJUCI = 12
 
+
+def preberi_stevilo():
+    """Funkcija, ki prebere vnos števila iz konzole."""
+    while True:
+        vnos = input("> ")
+        try:
+            return int(vnos)
+        except ValueError:
+            print("Vnesti morate število.")
+
+
+def izberi_moznost(moznosti):
+    """Uporabniku našteje možnosti ter vrne izbrano."""
+    for i, (_moznost, opis) in enumerate(moznosti, 1):
+        print(f"{i}) {opis}")
+    while True:
+        i = preberi_stevilo()
+        if 1 <= i <= len(moznosti):
+            moznost, _opis = moznosti[i - 1]
+            return moznost
+        else:
+            print(f"Vnesti morate število med 1 in {len(moznosti)}.")
+
+
 def tekstovni_vmesnik():
     pozdravi()
     while True:
@@ -27,7 +56,8 @@ def tekstovni_vmesnik():
             (DODAJ_VAJO, "Dodaj vajo"),
             (DODAJ_SKLADBO, "Dodaj skladbo"),
             (ST_SKLADB, "Prikazi stevilo skladb"),
-            (RAZMERJE_NAUCENIH_SKLADB, "Prikazi razmerje med naucenimi in nenaucenimi skladbami"),
+            (RAZMERJE_NAUCENIH_SKLADB,
+             "Prikazi razmerje med naucenimi in nenaucenimi skladbami"),
             (NAUCI_SE, "Nauci se skladbo"),
             (DODAJ_SKLADBO_LEKCIJA, "Dodaj skladbo v lekcijo"),
             (PRETEKLOST, "Preveri, ce je dogodek ze pretekel"),
@@ -56,24 +86,30 @@ def tekstovni_vmesnik():
         elif vnos == PRETEKLOST:
             preteklost()
         elif vnos == ZAKLJUCI:
-            break 
-        
+            moj_model.shrani_v_datoteko(DATOTEKA)
+            print("Nasvidenje!")
+            break
+
+
 def pozdravi():
     print("Pozdravljeni v svoji beležki!")
+
 
 def dodaj_sklop():
     print("Vnesi podatke za nov sklop vaj!")
     ime = input("Ime: ")
     opis = input("Opis: ")
     nov_sklop = Sklop_vaj(ime, opis)
-    model.dodaj_sklop(nov_sklop)
+    moj_model.dodaj_sklop(nov_sklop)
+
 
 def dodaj_oznako():
     print("Vnesi podatke za novo oznako!")
     ime = input("Ime: ")
     mapa = input("Mapa: ")
     nova_oznaka = Oznaka(ime, mapa)
-    model.dodaj_oznako(nova_oznaka)
+    moj_model.dodaj_oznako(nova_oznaka)
+
 
 def dodaj_dogodek():
     print("Vnesi podatke za nov dogodek!")
@@ -81,7 +117,8 @@ def dodaj_dogodek():
     kdaj = input("Datum: ")
     kje = input("Lokacija: ")
     nov_dogodek = Dogodek(kaj, kdaj, kje)
-    model.dodaj_dogodek(nov_dogodek)
+    moj_model.dodaj_dogodek(nov_dogodek)
+
 
 def dodaj_zapisek():
     print("Vnesi podatke za nov zapisek!")
@@ -90,7 +127,4 @@ def dodaj_zapisek():
     ucitelj = input("Ucitelj: ")
     vsebina = input("Vsebina: ")
     nov_zapisek = Zapisek(datum, predmet, ucitelj, vsebina)
-    model.dodaj_zapisek(nov_zapisek)
-
-
-
+    moj_model.dodaj_zapisek(nov_zapisek)
