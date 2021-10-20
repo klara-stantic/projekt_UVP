@@ -7,18 +7,35 @@ except FileNotFoundError:
     moj_model = Model()
 
 
+#MOZNOSTI
+
 DODAJ_SKLOP = 1
-DODAJ_OZNAKO = 2
+POBRISI_SKLOP = 11
+ZAMENJAJ_SKLOP = 12
+UREDI_SKLOP = 13
+
+DODAJ_SKLADBO = 2
+POBRISI_SKLADBO = 21
+ZAMENJAJ_SKLADBO = 22
+UREDI_SKLADBO = 23
+NAUČI_SE = 24
+
 DODAJ_ZAPISEK = 3
+POBRISI_ZAPISEK = 31
+ZAMENJAJ_ZAPISEK = 32
+UREDI_ZAPISEK = 33
+
 DODAJ_DOGODEK = 4
+POBRISI_DOGODEK = 41
+ZAMENJAJ_DOGODEK = 42
+UREDI_DOGODEK = 43
+
 DODAJ_VAJO = 5
-DODAJ_SKLADBO = 6
-ST_SKLADB = 7
-RAZMERJE_NAUCENIH_SKLADB = 8
-NAUCI_SE = 9
-DODAJ_SKLADBO_LEKCIJA = 10
-PRETEKLOST = 11
-ZAKLJUCI = 12
+POBRISI_VAJO = 51
+ZAMENJAJ_VAJO = 52
+UREDI_VAJO = 53
+
+ZAKLJUCI = 6
 
 
 def preberi_stevilo():
@@ -126,18 +143,21 @@ def prikazi_vsebino(model):
 def izberi_dogodek(model):
     return izberi_moznost([(dogodek, prikaz_dogodka(dogodek)) for dogodek in model.dogodki])
 
+
 def izberi_zapisek(model):
     return izberi_moznost([(zapisek, kratek_prikaz_zapiska(zapisek)) for zapisek in model.zapiski])
+
 
 def izberi_sklop(model):
     return izberi_moznost([(sklop, prikaz_sklopa(sklop)) for sklop in model.sklopi_vaj])
 
+
 def izberi_vajo(model):
     return izberi_moznost([(vaja, prikaz_vaje(vaja)) for vaja in model.aktualen_sklop.vaje])
 
+
 def izberi_skladbo(model):
     return izberi_moznost([(skladba, prikaz_skladbe(skladba)) for skladba in model.skladbe])
-
 
 
 def tekstovni_vmesnik():
