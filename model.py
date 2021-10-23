@@ -373,7 +373,7 @@ class Dogodek:
 
     @staticmethod
     def iz_slovarja(slovar):
-        dogodek = Dogodek(slovar["kaj"], slovar["kdaj"], slovar["cas"],
+        dogodek = Dogodek(slovar["kaj"], slovar["kdaj"], slovar["ura"],
                           slovar["kje"], slovar["opombe"])
         dogodek.skladbe = [
             Skladba.iz_slovarja(skladba_slovar) for skladba_slovar in slovar["skladbe"]
