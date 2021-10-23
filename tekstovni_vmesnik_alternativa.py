@@ -34,6 +34,7 @@ DODAJ_ZAPISEK = 30
 POBRISI_ZAPISEK = 31
 ZAMENJAJ_ZAPISEK = 32
 #UREDI_ZAPISEK = 34
+DODAJ_SKLADBO_ZAPISEK = 35
 ZAKLJUCI_ZAPISEK = 33
 
 DODAJ_DOGODEK = 40
@@ -167,6 +168,10 @@ def izberi_vajo(model):
 def izberi_skladbo(model):
     return izberi_moznost([(skladba, prikaz_skladbe(skladba)) for skladba in model.skladbe])
 
+#def izberi_skladbo_2(model):
+#    """Ko potrebuješ izbiro za novo skladbo (dogodki, zapiski)"""
+#    return izberi_moznost(["nova", "Nova skladba"] + [(skladba, prikaz_skladbe(skladba)) for skladba in model.skladbe])
+
 # TEKSTOVNI VMESNIK
 
 
@@ -208,7 +213,7 @@ def urejanje_sklopov():
             print("Aktualen sklop: " + prikaz_sklopa(moj_model.aktualen_sklop))
         vnos = izberi_moznost([
             (DODAJ_SKLOP, "Dodaj sklop vaj"),
-            (POBRISI_SKLOP, "Pobriši trenuten sklop vaj"),
+            (POBRISI_SKLOP, "Pobriši sklop vaj"),
             (ZAMENJAJ_SKLOP, "Zamenjaj sklop vaj"),
             (DODAJ_VAJO, "Dodaj vajo"),
             (POBRISI_VAJO, "Pobriši vajo"),
@@ -237,8 +242,9 @@ def dodaj_sklop():
 
 
 def pobrisi_sklop():
-    sklop = moj_model.aktualen_sklop
+    sklop = izberi_sklop(moj_model)
     moj_model.izbrisi_sklop(sklop)
+    moj_model.aktualen_sklop = None
 
 
 def zamenjaj_sklop():
@@ -272,7 +278,7 @@ def urejanje_skladb():
                   prikaz_skladbe(moj_model.aktualna_skladba))
         vnos = izberi_moznost([
             (DODAJ_SKLADBO, "Dodaj skladbo"),
-            (POBRISI_SKLADBO, "Pobriši trenutno skladbo"),
+            (POBRISI_SKLADBO, "Pobriši skladbo"),
             (ZAMENJAJ_SKLADBO, "Zamenjaj trenutnoskladbo"),
             (NAUCI_SE, "Nauči se trenutno skladbo"),
             (ZAKLJUCI_SKLADBO, "Zakljuci urejanje skladb"),
@@ -298,8 +304,10 @@ def dodaj_skladbo():
 
 
 def pobrisi_skladbo():
-    skladba = moj_model.aktualna_skladba
+    skladba = izberi_skladbo(moj_model)
     moj_model.izbrisi_skladbo(skladba)
+    moj_model.aktualna_skladba = None
+    
 
 
 def zamenjaj_skladbo():
@@ -321,7 +329,7 @@ def urejanje_dogodkov():
                   prikaz_dogodka(moj_model.aktualen_dogodek))
         vnos = izberi_moznost([
             (DODAJ_DOGODEK, "Dodaj dogodek"),
-            (POBRISI_DOGODEK, "Pobriši trenuten dogodek"),
+            (POBRISI_DOGODEK, "Pobriši dogodek"),
             (ZAMENJAJ_DOGODEK, "Zamenjaj trenuten dogodek"),
             (DODAJ_SKLADBO_DOGODEK, "Trenutnemu dogodku dodaj skladbo"),
             (ZAKLJUCI_DOGODEK, "Zaključi urejanje dogodkov"),
@@ -344,23 +352,23 @@ def dodaj_dogodek():
     while True:
         datum = input("Datum: ")
         if preverjanje_formata(datum) or not datum:
-                kdaj = datum
-                break
+            kdaj = datum
+            break
         else:
             print("Napačen format. Datum mora biti formata LLLL-MM-DD")
     while True:
         ura = input("Ura: ")
         if preverjanje_formata(ura, "%H:%M") or not ura:
-                cas = ura
-                break
+            cas = ura
+            break
         else:
-            print("Napačen format. Datum mora biti formata HH:MM")    
+            print("Napačen format. Datum mora biti formata HH:MM")
     kje = input("Lokacija: ")
     opombe = input("Opombe: ")
     nov_dogodek = Dogodek(kaj, kdaj, cas, kje, opombe)
     moj_model.dodaj_dogodek(nov_dogodek)
 
- 
+
 def preverjanje_formata(vnos, format="%Y-%m-%d"):
     niz = str(vnos)
     try:
@@ -372,8 +380,9 @@ def preverjanje_formata(vnos, format="%Y-%m-%d"):
 
 
 def pobrisi_dogodek():
-    dogodek = moj_model.aktualen_dogodek
+    dogodek = izberi_dogodek(moj_model)
     moj_model.izbrisi_dogodek(dogodek)
+    moj_model.aktualen_dogodek = None
 
 
 def zamenjaj_dogodek():
@@ -383,12 +392,93 @@ def zamenjaj_dogodek():
 
 
 def dodaj_skladbo_dogodku():
+    dogodek = moj_model.aktualen_dogodek
     if moj_model.skladbe:
-        dogodek = moj_model.aktualen_dogodek
         skladba = izberi_skladbo(moj_model)
         dogodek.dodaj_skladbo(skladba)
     else:
-        print("Žal v tvoji zbirki še ni skladb.")
+        print("Žal v tvoji zbirki še ni skladb")
+        moznosti = [(1, "Opusti"), (2, "Dodaj skladbo")]
+        izbrano = izberi_moznost(moznosti)
+        if izbrano == 1:
+            pass
+        else:
+            print("Vnesite podatke nove skladbe.")
+            naslov = input("Naslov: ")
+            avtor = input("Avtor: ")
+            nova_skladba = Skladba(naslov, avtor)
+            moj_model.dodaj_skladbo(nova_skladba)
+            dogodek.dodaj_skladbo(nova_skladba)
+            
 
+def urejanje_zapiskov():
+    while True:
+        print(prikaz_zapiskov(moj_model))
+        if moj_model.aktualen_zapisek:
+            print("Aktualen zapisek: " +
+                  kratek_prikaz_zapiska(moj_model.aktualen_zapisek))
+        vnos = izberi_moznost([
+            (DODAJ_ZAPISEK, "Dodaj zapisek iz lekcije"),
+            (POBRISI_ZAPISEK, "Pobriši zapisek"),
+            (ZAMENJAJ_ZAPISEK, "Zamenjaj zapisek"),
+            (DODAJ_SKLADBO_ZAPISEK, "Trenutnemu zapisku dodaj skladbo"),
+            (ZAKLJUCI_ZAPISEK, "Zaključi urejanje zapiskov"),
+        ])
+        if vnos == DODAJ_ZAPISEK:
+            dodaj_zapisek()
+        elif vnos == POBRISI_ZAPISEK:
+            pobrisi_zapisek()
+        elif vnos == ZAMENJAJ_ZAPISEK:
+            zamenjaj_zapisek()
+        elif vnos == DODAJ_SKLADBO_ZAPISEK:
+            dodaj_skladbo_zapisku()
+        elif vnos == ZAKLJUCI_ZAPISEK:
+            break
+
+def dodaj_zapisek():
+    print("Vnesite podatke novega zapiska.")
+    while True:
+        datum = input("Datum: ")
+        if preverjanje_formata(datum) or not datum:
+            kdaj = datum
+            break
+        else:
+            print("Napačen format. Datum mora biti formata LLLL-MM-DD")
+    predmet = input("Predmet: ")
+    ucitelj = input("Učitelj: ")
+    vsebina = input("Vsebina: ")
+    nov_zapisek = Zapisek(kdaj, predmet, ucitelj, vsebina)
+    moj_model.dodaj_zapisek(nov_zapisek)
+
+
+def pobrisi_zapisek():
+    zapisek = izberi_zapisek(moj_model)
+    moj_model.izbrisi_zapisek(zapisek)
+    moj_model.aktualen_zapisek = None
+
+
+def zamenjaj_zapisek():
+    print("Izberite zapisek, na katerega bi preklopili.")
+    zapisek = izberi_zapisek(moj_model)
+    moj_model.zamenjaj_zapisek(zapisek)
+
+def dodaj_skladbo_zapisku():
+    zapisek = moj_model.aktualen_zapisek
+    if moj_model.skladbe:
+        skladba = izberi_skladbo(moj_model)
+        zapisek.dodaj_skladbo(skladba)
+    else:
+        print("Žal v tvoji zbirki še ni skladb")
+        moznosti = [(1, "Opusti"), (2, "Dodaj skladbo")]
+        izbrano = izberi_moznost(moznosti)
+        if izbrano == 1:
+            pass
+        else:
+            print("Vnesite podatke nove skladbe.")
+            naslov = input("Naslov: ")
+            avtor = input("Avtor: ")
+            nova_skladba = Skladba(naslov, avtor)
+            moj_model.dodaj_skladbo(nova_skladba)
+            zapisek.dodaj_skladbo_lekcija(nova_skladba)
 
 tekstovni_vmesnik()
