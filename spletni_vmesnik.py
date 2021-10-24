@@ -58,17 +58,51 @@ def odjava_post():
     print("Piškotek je bil uspešno pobrisan.")
     bottle.redirect("/")
 
-
+#PRVA STRAN
 @bottle.get('/')
 def osnovna_stran():
+    moj_model = nalozi_uporabnikov_model()
     return bottle.template(
-        "baza.html",
+        "prva_stran.html",
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+        skladbe = moj_model.skladbe if moj_model.skladbe else [], 
+        st_skladb = moj_model.stevilo_skladb(),
+        st_naucenih = moj_model.stevilo_naucenih(),
+        sklopi = moj_model.sklopi_vaj if moj_model.sklopi_vaj else [], 
+        st_sklopov = moj_model.stevilo_sklopov(),
+        dogodki = moj_model.dogodki if moj_model.dogodki else [],
+        st_dogodkov = moj_model.stevilo_dogodkov(),
+        zapiski = moj_model.zapiski if moj_model.zapiski else[],
+        st_zapiskov = moj_model.stevilo_zapiskov(),
     )
 
 
-@bottle.get('/Zapiski/')
+@bottle.get('/zapiski/')
 def zapiski():
-    pass
+    return bottle.template(
+        "zapiski.html",
+    )
+
+@bottle.get('/skladbe/')
+def skladbe():
+    return bottle.template(
+        "skladbe.html",
+    )
+
+@bottle.get('/dogodki/')
+def dogodki():
+    return bottle.template(
+        "dogodki.html",
+    )
+
+@bottle.get('/vaje/')
+def vaje():
+    return bottle.template(
+        "vaje.html",
+    )
+
+
+
 
 
 @bottle.error(404)
