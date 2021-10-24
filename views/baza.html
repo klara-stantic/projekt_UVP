@@ -13,61 +13,76 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="container">
             <div class="navbar-brand">
-                <span class="navbar-item">
+                <span class="navbar-item" href="/">
                     <span class="icon">
-                        <i class="fas fa-vinyl-record"></i>
-                      </span>
-                  <strong>Musicbook</strong>
+                        <i class="fas fa-play"></i>
+                    </span>
+                    <strong>Musicbook</strong>
                 </span>
             </div>
-
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item"> <span class="icon is-small"><i class="fas fa-music"
-                            aria-hidden="true"></i></span>
-                        <span> Skladbe</span>
-                    </a>
-
-                    <a class="navbar-item"> <span class="icon is-small"><i class="fas fa-clipboard"
-                            aria-hidden="true"></i></span>
-                        <span> Zapiski</span>
-                    </a>
-
-                    <a class="navbar-item"> <span class="icon is-small"><i class="fas fa-calendar"
-                            aria-hidden="true"></i></span>
-                        <span> Dogodki</span>
-                    </a>
-
-                    <a class="navbar-item"> <span class="icon is-small"><i class="fas fa-book"
-                            aria-hidden="true"></i></span>
-                        <span> Zbirka vaj</span>
-                    </a>
-                </div>
-
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                      <div class="buttons">
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
                         % if uporabnisko_ime:
                         <form method="POST" action="/odjava/">
-                          <button class="button is-light">
-                            Odjava
-                          </button>
+                            <button class="button is-light">
+                                Odjava
+                            </button>
                         </form>
                         % else:
                         <a class="button is-primary" href="/registracija/">
-                          <strong>Registracija</strong>
+                            <strong>Registracija</strong>
                         </a>
                         <a class="button is-light" href="/prijava/">
-                          Prijava
+                            Prijava
                         </a>
                         % end
-                      </div>
                     </div>
-                  </div>
                 </div>
             </div>
         </div>
+        </div>
     </nav>
+
+    <div class="tabs is-centered">
+        <ul>
+            <li class ="is_active">
+                <a href="/">
+                    <span class="icon is-small"><i class="fas fa-home" aria-hidden="true"></i></span>
+                    <span> Domov</span>
+                </a>
+            </li>
+            <li>
+                <a href="/skladbe/">
+                    <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
+                    <span> Skladbe</span>
+                </a>
+            </li>
+            <li>
+                <a href="/zapiski/">
+                    <span class="icon is-small"><i class="fas fa-clipboard" aria-hidden="true"></i></span>
+                    <span> Zapiski</span>
+                </a>
+            </li>
+            <li>
+                <a href="/dogodki/">
+                    <span class="icon is-small"><i class="fas fa-calendar" aria-hidden="true"></i></span>
+                    <span> Dogodki</span>
+                </a>
+            </li>
+            <li>
+                <a href="/vaje/">
+                    <span class="icon is-small"><i class="fas fa-book" aria-hidden="true"></i></span>
+                    <span> Zbirka vaj</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <section class="section">
+        {{!base}}
     </section>
 </body>
 
