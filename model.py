@@ -113,6 +113,9 @@ class Model:
             if dogodek.preteklost():
                 pretekli.append(dogodek)
         return len(pretekli)
+    
+    def stevilo_prihajajocih(self):
+        return self.stevilo_dogodkov() - self.stevilo_preteklih()
 
 #    def razmerje_po_kriteriju(self, kriterij): #manjka ti iteracija po vseh objektih novih razredov!!!
 #        selekcija_oznak = []
