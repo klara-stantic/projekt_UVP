@@ -1,2 +1,46 @@
 % rebase('baza.html')
 
+<div class="block">
+    <h1 class="title">Zapiski</h1>
+</div>
+
+<div class="block">
+    <button class="button is-rounded is-link is-light">
+        <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+        </span>
+        <a href="/dodaj_zapisek/"> Dodaj zapisek </a>
+    </button>
+</div>
+
+
+<div class="box">
+    <article class="tile is-primary">
+        <p class="subtitle">Število vseh zapiskov: <button class="button is-static is-rounded">
+                {{st_zapiskov}} </button> 
+        </p>
+    </article>
+    <div class="content">
+        %if zapiski:
+        <div>
+        % for zapisek in zapiski:
+            <div class="box">
+                <strong>Datum:</strong> {{zapisek.datum}}
+                <strong>Učitelj:</strong> {{zapisek.ucitelj}}
+                <strong>Predmet:</strong> {{zapisek.predmet}}
+                <strong>Vsebina:</strong> {{zapisek.vsebina}}
+                <strong>Skladbe: </strong>
+                % for skladba in zapisek.skladbe:
+                <ul>
+                    <li>{{skladba.naslov}}</li>
+                </ul>
+                % end
+            </div>
+        </div>
+        %else:
+        <div>
+            <p>Nimate še shranjenih zapiskov.</p>
+        </div>
+        %end
+    </div>
+</div>

@@ -1,0 +1,52 @@
+% rebase('baza.html')
+
+<div class="notification is-primary">
+    DODAJANJE ZAPISKA
+</div>
+
+<form method="POST" action="" Class="box">
+    <div class="field">
+        <label class="label">Predmet</label>
+        <div class="control">
+            <input class="input" type="text" name="predmet" placeholder="npr. kitara">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Datum</label>
+        <div class="control">
+            <input class="input" type="date" name="datum" placeholder="npr. 2020-12-31">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Učitelj</label>
+        <div class="control">
+            <input class="input" type="text" name="ucitelj" placeholder="npr. Janez Novak">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Vsebina</label>
+        <div class="control">
+            <input class="input" type="text" name="vsebina" placeholder="Vnesi vsebino lekcije">
+        </div>
+    </div>
+    <br>
+    <div class="columns">
+        <div class="column is-2">
+            <div class="control">
+                <button class="button is-link">
+                    <imput type="submit">
+                        Dodaj
+                    </imput>
+                </button>
+            </div>
+        </div>
+        <div class="column is-2">
+            <div class="control">
+                <a class="button is-link is-light" href="/">Prekliči</a>
+            </div>
+        </div>
+    </div>   
+</form>
