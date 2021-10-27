@@ -313,6 +313,7 @@ class Skladba:
         self.link = ""
         self.opombe = ""
         self.pazi = ""
+        self.pdf = []
         self.nauceno = False
         self.oznake = []
 
@@ -330,6 +331,7 @@ class Skladba:
             "link": self.link,
             "opombe": self.opombe,
             "pazi": self.pazi,
+            "pdf": self.pdf,
             "nauceno": self.nauceno,
             "oznake": self.oznake,
         }
@@ -339,6 +341,7 @@ class Skladba:
         skladba = Skladba(slovar["naslov"], slovar["avtor"])
         skladba.link = slovar["link"]
         skladba.pazi = slovar["pazi"]
+        skladba.pdf = slovar["pdf"]
         skladba.opombe = slovar["opombe"]
         skladba.nauceno = slovar["nauceno"]
         skladba.oznake = slovar["oznake"]
