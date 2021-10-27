@@ -1,52 +1,46 @@
 % rebase('baza.html')
 
-% rebase('baza.html')
-
-<article class="message is-primary">
+<article class="message is-success">
   <div class="message-header">
     <p>Pozdravljeni!</p>
   </div>
   <div class="message-body">
-        Dobrodošli v svoji glasbeni beležki. 
-        Tukaj lahko shranjujete vse informacije, ki so za glasbenika najpomembnejše - beležka ima prostor za skladbe, zapiske, vaje in dogodke, na katere ne želite pozabiti. Želim vam prijetno uporabo, Klara
+    Dobrodošli v svoji glasbeni beležki.
+    Tukaj lahko shranjujete vse informacije, ki so za glasbenika najpomembnejše - beležka ima prostor za skladbe,
+    zapiske, vaje in dogodke, na katere ne želite pozabiti. Želim vam prijetno uporabo, Klara
   </div>
 </article>
 
-<div class="tile is-ancestor">
-  <div class="tile is-vertical is-8">
-    <div class="tile">
-      <div class="tile is-parent is-vertical">
-        <article class="tile is-child notification is-info">
-          <p class="title" href="/zapiski/">Zapiski</p>
-          <div class="content">
-            tukaj bodo zapiski
-          </div>
-        </article>
-        <article class="tile is-child notification is-warning" >
-          <p class="title" href="/vaje/">Zbirka vaj</p>
-          <div class="content">
-            tukaj bodo vaje
-          </div>
-        </article>
+<div class="row">
+  <div class="columns">
+    <div class="column">
+      <div class="box has-background-info">
+        <a class="title" href="/skladbe/">Skladbe <button class="button is-static is-rounded"> {{st_skladb}}
+        </button> </a>
       </div>
     </div>
-    <div class="tile is-parent">
-      <article class="tile is-child notification is-primary">
-        <p class="title" href="/skladbe/">Skladbe</p>
-        <div class="content">
-          tukaj bodo skladbe
-        </div>
-      </article>
+    <div class="column">
+      <div class="box has-background-success">
+        <a class="title" href="/zapiski/">Zapiski <button class="button is-static is-rounded"> {{st_zapiskov}}
+          </button> </a>
+      </div>
     </div>
   </div>
-  <div class="tile is-parent">
-    <article class="tile is-child notification is-success">
-      <div class="content">
-        <p class="title" href="/dogodki/">Dogodki</p>
-        <div class="content">
-          tukaj bodo dogodki
-        </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <div class="column">
+      <div class="box has-background-warning">
+        <a class="title" href="/dogodki/">Dogodki <button class="button is-static is-rounded"> {{st_dogodkov}}
+          </button> </a>
       </div>
-    </article>
+    </div>
+    <div class="column">
+      <div class="box has-background-link">
+        <a class="title" href="/vaje/">Zbirka vaj <button class="button is-static is-rounded"> {{st_sklopov}}
+          </button> </a>
+      </div>
+    </div>
   </div>
 </div>
