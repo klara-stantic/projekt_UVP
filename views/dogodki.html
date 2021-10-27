@@ -1,1 +1,39 @@
 % rebase('baza.html')
+
+<div class="block">
+    <h1 class="title">Dogodki</h1>
+</div>
+
+<div class="block">
+    <button class="button is-rounded is-link is-light">
+        <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+        </span>
+        <a href="/dodaj_dogodek/"> Dodaj dogodek </a>
+    </button>
+</div>
+
+<div class="box">
+    <article class="tile is-primary">
+        <p class="subtitle">Število vseh dogodkov: <button class="button is-static is-rounded">
+                {{st_dogodkov}} </button> </p>
+        <div class="content">
+            % if dogodki:
+            % for dogodek in dogodki:
+            <div class="box">
+                <strong>Naslov:</strong> {{dogodek.kaj}}
+                <strong>Datum:</strong> {{dogodek.kdaj}}
+                <strong>Ura:</strong> {{dogodek.ura}}
+                <strong>Lokacija:</strong> {{dogodek.kje}}
+                <strong>Opombe:</strong> {{dogodek.opombe}}
+                <ul>
+                    % for skladba in dogodek.skladbe:
+                    <li>{{skladba.naslov}}</li>
+                </ul>
+            </div>
+            % else:
+            <h1>Nimate še shranjenih dogodkov.</h1>
+            %end
+        </div>
+    </article>
+</div>

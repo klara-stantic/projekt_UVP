@@ -1,1 +1,37 @@
 % rebase('baza.html')
+
+<div class="block">
+    <h1 class="title">Zbirka vaj</h1>
+</div>
+
+<div class="block">
+    <button class="button is-rounded is-link is-light">
+        <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+        </span>
+        <a href="/dodaj_vajo/"> Dodaj sklop vaj </a>
+    </button>
+</div>
+
+<div class="box">
+    <article class="tile is-primary">
+        <p class="subtitle">Število vseh sklopov vaj: <button class="button is-static is-rounded">
+                {{st_sklopov}} </button> </p>
+        <div class="content">
+            % if sklopi:
+                % for sklop in sklopi:
+                <div class="box">
+                    <strong>Ime:</strong> {{sklop.ime}}
+                    <strong>Opis:</strong> {{sklop.opis}}
+                    <strong>Vaje: </strong>
+                <ul>
+                    % for vaja in sklop.vaje:
+                    <li>{{vaja.opis}}</li>
+                </ul>
+            </div>
+            % else:
+            <h1>Nimate še shranjenih vaj.</h1>
+            %end
+        </div>
+    </article>
+</div>
