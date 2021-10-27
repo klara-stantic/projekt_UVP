@@ -1,1 +1,52 @@
 % rebase('baza.html')
+
+<div class="block">
+    <h1 class="title">Skladbe</h1>
+</div>
+
+<div class="block">
+    <button class="button is-rounded is-link is-light">
+        <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+        </span>
+        <a href="/dodaj_skladbo/"> Dodaj skladbo </a>
+    </button>
+</div>
+
+<div class="box">
+    <article class="tile is-primary">
+        <p class="subtitle">Število vseh skladb: <button class="button is-static is-rounded">
+                {{st_skladb}} </button> 
+        </p>
+        <br>
+        </article>
+        <div class="content">
+            <div class="columns is-multiline is-mobile is-centered">
+                % if skladbe:
+                    % for skladba in skladbe:
+                    <div class="column is-narrow">
+                        <div class="box">
+                            <p><strong>Naslov:</strong> {{skladba.naslov}}</p>
+                            <p><strong>Avtor:</strong> {{skladba.avtor}}</p>
+                            <p><strong>Link:</strong> {{skladba.link}}</p>
+                            <p><strong>Opombe:</strong> {{skladba.opombe}}</p>
+                            <p>
+                                <strong>Pazi:</strong> {{skladba.pazi}}
+                                <ul>
+                                    % for oznaka in skladba.oznake:
+                                    <li>{{oznaka}}</li>
+                                    %end
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                    %end
+            </div>
+            % else:
+            <div>
+                <p>Nimate še shranjenih skladb.</p>
+            </div>
+            %end
+        </div>
+    </article>
+</div>
