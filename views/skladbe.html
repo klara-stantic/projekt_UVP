@@ -19,43 +19,58 @@
                 {{st_skladb}} </button> 
         </p>
         <br>
-        </article>
-        <div class="content">
-            <div class="columns is-multiline is-mobile is-centered">
-                % if skladbe:
-                    % for indeks, skladba in enumerate(skladbe):
-                    <div class="column is-narrow">
-                        <div class="box">
-                            <p><strong>Naslov:</strong> {{skladba.naslov}}</p>
-                            <p><strong>Avtor:</strong> {{skladba.avtor}}</p>
-                            <p><strong>Link:</strong> {{skladba.link}}</p>
-                            <p><strong>Opombe:</strong> {{skladba.opombe}}</p>
-                            <p>
-                                <strong>Pazi:</strong> {{skladba.pazi}}
-                                <ul>
-                                    % for oznaka in skladba.oznake:
-                                    <li>{{oznaka}}</li>
-                                    %end
-                                </ul>
-                            </p>
-                            <form method="POST" action="/izbrisi_skladbo/">
-                                <button class="button is-rounded is-danger is-light">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-minus"></i>
-                                    </span>
-                                    <input type="hidden" name="indeks" value="{{indeks}}">
-                                    <input type="submit" value="Izbriši">
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    %end
-            </div>
-            % else:
-            <div>
-                <p>Nimate še shranjenih skladb.</p>
-            </div>
-            %end
-        </div>
     </article>
+    <div class="content">
+        <div class="columns is-multiline is-mobile is-centered">
+            % if skladbe:
+                % for indeks, skladba in enumerate(skladbe):
+                <div class="column is-narrow">
+                    <div class="box">
+                        <p><strong>{{skladba.naslov}}</strong>
+                            <br>
+                            <i>{{skladba.avtor}}</i> 
+                            <br>
+                        </p>
+                        % if skladba.link:
+                        <p><strong>Link:</strong> <a href="{{skladba.link}}">{{skladba.link}}</a></p>
+                        % end
+                        % if skladba.opombe:
+                        <p><strong>Opombe:</strong> {{skladba.opombe}}</p>
+                        %end
+                        % if skladba.pazi:
+                        <p><strong>Pazi:</strong> {{skladba.pazi}} </p>
+                        % end
+                        % if skladba.oznake:
+                        <ul>
+                            % for oznaka in skladba.oznake:
+                            <li>{{oznaka}}</li>
+                            %end
+                        </ul>
+                        % end
+                        % if skladba.pdf:
+                            %for page in skladba.pdf:
+                            <figure class="image is-4by3">
+                                <img src="page" alt="page">
+                            </figure>
+                            % end
+                        % end
+                        <form method="POST" action="/izbrisi_skladbo/">
+                            <button class="button is-rounded is-danger is-light">
+                                <span class="icon is-small">
+                                    <i class="fas fa-minus"></i>
+                                </span>
+                                <input type="hidden" name="indeks" value="{{indeks}}">
+                                <input type="submit" value="Izbriši">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                % end
+        </div>
+        % else:
+        <div>
+            <p>Nimate še shranjenih skladb.</p>
+        </div>
+        %end
+    </div>
 </div>
