@@ -156,15 +156,26 @@ def dodaj_skladbo():
     link = bottle.request.forms.getunicode("link")
     opombe = bottle.request.forms.getunicode("opombe")
     pazi = bottle.request.forms.getunicode("pazi")
+    pdf = bottle.request.forms.get("pdf")
     skladba = Skladba(naslov, avtor)
     skladba.link = link
     skladba.pazi = pazi
     skladbe.opombe = opombe
+    skladba.pdf = pdf
     moj_model = nalozi_uporabnikov_model()
     moj_model.dodaj_skladbo(skladba)
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/skladbe/')
 
+@bottle.post("/izbrisi_skladbo/")
+def izbrisi_skladbo():
+    indeks = bottle.request.forms.getunicode("indeks")
+    moj_model = nalozi_uporabnikov_model()
+    skladba = moj_model.skladbe[int(indeks)]
+    moj_model.aktualna_skladba = skladba
+    moj_model.izbrisi_skladbo(skladba)
+    shrani_uporabnikov_model(moj_model)
+    bottle.redirect("/skladbe/")
 
 @bottle.get('/dogodki/')
 def dogodki():
