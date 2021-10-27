@@ -23,7 +23,7 @@
         <div class="content">
             <div class="columns is-multiline is-mobile is-centered">
                 % if skladbe:
-                    % for skladba in skladbe:
+                    % for indeks, skladba in enumerate(skladbe):
                     <div class="column is-narrow">
                         <div class="box">
                             <p><strong>Naslov:</strong> {{skladba.naslov}}</p>
@@ -38,6 +38,15 @@
                                     %end
                                 </ul>
                             </p>
+                            <form method="POST" action="/izbrisi_skladbo/">
+                                <button class="button is-rounded is-danger is-light">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-minus"></i>
+                                    </span>
+                                    <input type="hidden" name="indeks" value="{{indeks}}">
+                                    <input type="submit" value="Izbriši">
+                                </button>
+                            </form>
                         </div>
                     </div>
                     %end
