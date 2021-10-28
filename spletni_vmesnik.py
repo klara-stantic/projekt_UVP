@@ -94,12 +94,6 @@ def zapiski():
         st_zapiskov = moj_model.stevilo_zapiskov(),
     )
 
-@bottle.get("/prikaz_zapiska/")
-def prikaz_zapiska():
-    return bottle.template(
-        "prikaz_zapiska.html",
-    )
-
 @bottle.get("/dodaj_zapisek/")
 def dodaj_zapisek():
     return bottle.template(
@@ -132,13 +126,6 @@ def skladbe():
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         skladbe = moj_model.skladbe if moj_model.skladbe else [], 
         st_skladb = moj_model.stevilo_skladb(),
-    )
-
-
-@bottle.get("/prikaz_skladbe/")
-def prikaz_skladbe():
-    return bottle.template(
-        "prikaz_skladbe.html",
     )
 
 @bottle.get("/dodaj_skladbo/")
@@ -187,6 +174,28 @@ def dogodki():
         st_dogodkov = moj_model.stevilo_prihajajocih(),
     )
 
+@bottle.get("/dodaj_dogodek/")
+def dodaj_dogodek():
+    return bottle.template(
+        "dodajanje_dogodka.html", 
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
+    )
+
+
+@bottle.post("/dodaj_dogodek/")
+def dodaj_dogodek():
+    kaj = bottle.request.forms.getunicode("kaj")
+    kdaj = bottle.request.forms.getunicode("kdaj")
+    kje = bottle.request.forms.getunicode("kje")
+    ura = bottle.request.forms.getunicode("ura")
+    opombe = bottle.request.forms.getunicode("opombe")
+    dogodek = Dogodek(kaj, kdaj, ura, kje)
+    dogodek.opombe = opombe
+    moj_model = nalozi_uporabnikov_model()
+    moj_model.dodaj_dogodek(dogodek)
+    shrani_uporabnikov_model(moj_model)
+    bottle.redirect('/dogodki/')
+
 @bottle.get('/vaje/')
 def vaje():
     moj_model = nalozi_uporabnikov_model()
@@ -197,8 +206,23 @@ def vaje():
         st_sklopov = moj_model.stevilo_sklopov(),
     )
 
+@bottle.get("/dodaj_sklop/")
+def dodaj_sklop():
+    return bottle.template(
+        "dodajanje_sklopov.html", 
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
+    )
 
 
+@bottle.post("/dodaj_sklop/")
+def dodaj_sklop():
+    ime = bottle.request.forms.getunicode("ime")
+    opis = bottle.request.forms.getunicode("opis")
+    sklop = Sklop_vaj(ime, opis)
+    moj_model = nalozi_uporabnikov_model()
+    moj_model.dodaj_sklop(sklop)
+    shrani_uporabnikov_model(moj_model)
+    bottle.redirect('/vaje/')
 
 
 @bottle.error(404)

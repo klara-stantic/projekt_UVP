@@ -1,0 +1,39 @@
+% rebase('baza.html')
+
+<div class="notification is-primary">
+    DODAJANJE SKLOPA VAJ
+</div>
+
+<form method="POST" action="/dodaj_sklop/" Class="box">
+    <div class="field">
+        <label class="label">Naslov</label>
+        <div class="control">
+            <input class="input" type="text" name="ime" placeholder="npr. Upevanje">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Opis</label>
+        <div class="control">
+            <input class="input" type="text" name="opis" placeholder="Vnesi kratek opis sklopa vaj.">
+        </div>
+    </div>
+
+    <br>
+    <div class="columns">
+        <div class="column is-2">
+            <div class="control">
+                <button class="button is-link">
+                    <imput type="submit">
+                        Dodaj
+                    </imput>
+                </button>
+            </div>
+        </div>
+        <div class="column is-2">
+            <div class="control">
+                <a class="button is-link is-light" href="/vaje/">Prekliči</a>
+            </div>
+        </div>
+    </div>   
+</form>

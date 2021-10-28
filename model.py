@@ -185,7 +185,7 @@ class Model:
 
 
 class Sklop_vaj:
-    def __init__(self, ime, opis):
+    def __init__(self, ime, opis=None):
         self.ime = ime
         self.opis = opis
         self.vaje = []
@@ -349,7 +349,7 @@ class Skladba:
 
 
 class Dogodek:
-    def __init__(self, kaj, kdaj, ura, kje, opombe=None):
+    def __init__(self, kaj, kdaj, ura, kje=None, opombe=None):
         self.kaj = kaj
         self.kdaj = kdaj
         self.ura = ura
