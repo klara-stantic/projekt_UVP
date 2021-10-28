@@ -1,42 +1,6 @@
 % rebase('baza.html')
 
 <div class="block">
-    <h1 class="title">Zbirka vaj</h1>
-</div>
-
-<div class="block">
-    <button class="button is-rounded is-link is-light">
-        <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-        </span>
-        <a href="/dodaj_sklop/"> Dodaj sklop vaj </a>
-    </button>
-</div>
-
-<div class="box">
-    <article class="tile is-primary">
-        <p class="subtitle">Število vseh sklopov vaj: <button class="button is-static is-rounded">
-                {{st_sklopov}} </button> </p>
-        <div class="content">
-            % if sklopi:
-                % for sklop in sklopi:
-                <div class="box">
-                    <strong>Ime:</strong> {{sklop.ime}}
-                    <strong>Opis:</strong> {{sklop.opis}}
-                    <strong>Vaje: </strong>
-                <ul>
-                    % for vaja in sklop.vaje:
-                    <li>{{vaja.opis}}</li>
-                </ul>
-            </div>
-            % else:
-            <h1>Nimate še shranjenih vaj.</h1>
-            %end
-        </div>
-    </article>
-</div>
-
-<div class="block">
     <h1 class="title">Vaje</h1>
 </div>
 
@@ -59,7 +23,7 @@
     <div class="content">
         <div class="columns is-multiline is-mobile is-centered">
             % if sklopi:
-                % for indeks, vaja in enumerate(sklopi):
+                % for indeks, sklop in enumerate(sklopi):
                 <div class="column is-narrow">
                     <div class="box">
                         <p><strong>{{sklop.ime}}</strong>
@@ -69,8 +33,8 @@
                         </p>
                         % if sklop.vaje:
                         <ul>
-                            % for vaja in sklop.vaje:
-                            <li>{{vaja}}</li>
+                            % for sklop in sklop.vaje:
+                            <li>{{sklop}}</li>
                             %end
                         </ul>
                         % end
