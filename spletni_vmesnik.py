@@ -81,6 +81,7 @@ def osnovna_stran():
         st_dogodkov = moj_model.stevilo_prihajajocih(),
         zapiski = moj_model.zapiski if moj_model.zapiski else[],
         st_zapiskov = moj_model.stevilo_zapiskov(),
+        razmerje = float(moj_model.razmerje()),
     )
 
 
@@ -107,15 +108,15 @@ def dodaj_zapisek():
     predmet = bottle.request.forms.getunicode("predmet")
     ucitelj = bottle.request.forms.getunicode("ucitelj")
     vsebina = bottle.request.forms.getunicode("vsebina")
-    if bottle.request.forms["datum"]:
-        datum = date.fromisoformat(bottle.request.forms["datum"])
+    if bottle.request.forms.getunicode("datum"):
+        datum = bottle.request.forms.getunicode("datum")
     else:
         datum = None
     zapisek = Zapisek(datum, predmet, ucitelj, vsebina)
     moj_model = nalozi_uporabnikov_model()
     moj_model.dodaj_zapisek(zapisek)
     shrani_uporabnikov_model(moj_model)
-    bottle.redirect('/prikaz_zapiska/')
+    bottle.redirect('/zapiski/')
     
 
 @bottle.get('/skladbe/')
