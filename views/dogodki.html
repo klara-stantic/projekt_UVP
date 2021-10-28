@@ -37,3 +37,63 @@
         </div>
     </article>
 </div>
+
+
+<div class="block">
+    <h1 class="title">Dogodki</h1>
+</div>
+
+<div class="block">
+    <button class="button is-rounded is-link is-light">
+        <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+        </span>
+        <a href="/dodaj_dogodek/"> Dodaj dogodek </a>
+    </button>
+</div>
+
+<div class="box">
+    <article class="tile is-primary">
+        <p class="subtitle">Število vseh dogodkov: <button class="button is-static is-rounded">
+                {{st_dogodkov}} </button> 
+        </p>
+        <br>
+    </article>
+    <div class="content">
+        <div class="columns is-multiline is-mobile is-centered">
+            % if dogodki:
+                % for indeks, dogodek in enumerate(dogodki):
+                <div class="column is-narrow">
+                    <div class="box">
+                        <p><strong>{{dogodek.kaj}}</strong>
+                            <br>
+                            <i>{{dogodek.kdaj}}</i> 
+                            <br>
+                        </p>
+                        % if dogodek.ura:
+                        <p><strong>Ura:</strong> <a href="{{dogodek.ura}}">{{skladba.link}}</a></p>
+                        % end
+                        % if dogodek.kje:
+                        <p><strong>Lokacija:</strong> {{dogodek.kje}}</p>
+                        %end
+                        % if dogodek.opombe:
+                        <p><strong>Opombe:</strong> {{dogodek.opombe}} </p>
+                        % end
+                        % if dogodek.skladbe:
+                        <ul>
+                            % for skladba in dogodek.skladbe:
+                            <li>{{skladba}}</li>
+                            %end
+                        </ul>
+                        % end
+                    </div>
+                </div>
+                % end
+        </div>
+        % else:
+        <div>
+            <p>Nimate še shranjenih dogodkov.</p>
+        </div>
+        %end
+    </div>
+</div>
