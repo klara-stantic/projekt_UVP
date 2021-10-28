@@ -126,6 +126,7 @@ def skladbe():
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         skladbe = moj_model.skladbe if moj_model.skladbe else [], 
         st_skladb = moj_model.stevilo_skladb(),
+        razmerje = int(moj_model.razmerje()),
     )
 
 @bottle.get("/dodaj_skladbo/")

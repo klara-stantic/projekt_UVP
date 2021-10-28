@@ -71,9 +71,11 @@ class Model:
         return naucene
 
     def razmerje(self):
-        procenti = (int(self.stevilo_naucenih()) * 100) / \
-            int(self.stevilo_skladb())
-        return f"{procenti:.3}%"
+        if self.skladbe:
+            procenti = (int(self.stevilo_naucenih()) * 100) / int(self.stevilo_skladb())
+            return f"{procenti:.3}"
+        else:
+            return 0
 
     # ZAPISKI
 
