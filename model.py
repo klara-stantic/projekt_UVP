@@ -324,7 +324,7 @@ class Skladba:
         return niz
 
     def nauci_se(self):
-        self.nauceno = True
+        self.nauceno = not self.nauceno
 
     def v_slovar(self):
         return {

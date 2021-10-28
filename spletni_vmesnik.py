@@ -126,7 +126,7 @@ def skladbe():
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         skladbe = moj_model.skladbe if moj_model.skladbe else [], 
         st_skladb = moj_model.stevilo_skladb(),
-        razmerje = int(moj_model.razmerje()),
+        razmerje = float(moj_model.razmerje()),
     )
 
 @bottle.get("/dodaj_skladbo/")
@@ -154,6 +154,15 @@ def dodaj_skladbo():
     moj_model.dodaj_skladbo(skladba)
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/skladbe/')
+
+@bottle.post("/nauceno/")
+def nauceno():
+    indeks = bottle.request.forms.getunicode("indeks")
+    moj_model = nalozi_uporabnikov_model()
+    skladba = moj_model.skladbe[int(indeks)]
+    skladba.nauci_se()
+    shrani_uporabnikov_model(moj_model)
+    bottle.redirect("/skladbe/")
 
 @bottle.post("/izbrisi_skladbo/")
 def izbrisi_skladbo():

@@ -5,7 +5,7 @@
 </div>
 
 <div>
-    <p>Naučene skladbe</p>
+    <p>Naučene skladbe: {{razmerje}}%</p>
     <br>
     <progress class="progress is-warning" value="{{razmerje}}" max="100">{{razmerje}}%</progress>
     <br>
@@ -38,6 +38,20 @@
                             <br>
                             <i>{{skladba.avtor}}</i> 
                             <br>
+                            <form method="POST" action="/nauceno/">
+                                <input type="hidden" name="indeks" value="{{indeks}}">
+                                <button class="button is-small is-rounded is-light is-warning">
+                                    <p>Naučeno&nbsp;&nbsp;
+                                        <span class="icon is-small">
+                                            % if skladba.nauceno:
+                                            <i class="far fa-check-square"></i>
+                                            % else:
+                                            <i class="far fa-square"></i>
+                                            % end
+                                        </span>
+                                    </p>
+                                </button>
+                            </form>
                         </p>
                         % if skladba.link:
                         <p><strong>Link:</strong> <a href="{{skladba.link}}">{{skladba.link}}</a></p>
@@ -63,7 +77,7 @@
                             % end
                         % end
                         <form method="POST" action="/izbrisi_skladbo/">
-                            <button class="button is-rounded is-danger is-light">
+                            <button class="button is-rounded is-danger is-small is-light">
                                 <span class="icon is-small">
                                     <i class="fas fa-minus"></i>
                                 </span>
