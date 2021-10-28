@@ -3,14 +3,14 @@
 <div class="block">
     <h1 class="title">Skladbe</h1>
 </div>
-
+%if skladbe:
 <div>
     <p>Naučene skladbe: {{razmerje}}%</p>
     <br>
     <progress class="progress is-warning" value="{{razmerje}}" max="100">{{razmerje}}%</progress>
     <br>
 </div>
-
+%end
 
 <div class="block">
     <button class="button is-rounded is-link is-light">
@@ -32,7 +32,7 @@
         <div class="columns is-multiline is-mobile is-centered">
             % if skladbe:
                 % for indeks, skladba in enumerate(skladbe):
-                <div class="column is-narrow">
+                <div class="column is-4">
                     <div class="box">
                         <p><strong>{{skladba.naslov}}</strong>
                             <br>
