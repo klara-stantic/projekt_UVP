@@ -35,3 +35,53 @@
         </div>
     </article>
 </div>
+
+<div class="block">
+    <h1 class="title">Vaje</h1>
+</div>
+
+<div class="block">
+    <button class="button is-rounded is-link is-light">
+        <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+        </span>
+        <a href="/dodaj_sklop/"> Dodaj sklop vaj </a>
+    </button>
+</div>
+
+<div class="box">
+    <article class="tile is-primary">
+        <p class="subtitle">Število vseh vaj: <button class="button is-static is-rounded">
+                {{st_sklopov}} </button> 
+        </p>
+        <br>
+    </article>
+    <div class="content">
+        <div class="columns is-multiline is-mobile is-centered">
+            % if sklopi:
+                % for indeks, vaja in enumerate(sklopi):
+                <div class="column is-narrow">
+                    <div class="box">
+                        <p><strong>{{sklop.ime}}</strong>
+                            <br>
+                            <i>{{sklop.opis}}</i> 
+                            <br>
+                        </p>
+                        % if sklop.vaje:
+                        <ul>
+                            % for vaja in sklop.vaje:
+                            <li>{{vaja}}</li>
+                            %end
+                        </ul>
+                        % end
+                    </div>
+                </div>
+                % end
+        </div>
+        % else:
+        <div>
+            <p>Nimate še shranjenih sklopov vaj.</p>
+        </div>
+        %end
+    </div>
+</div>
