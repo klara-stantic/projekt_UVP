@@ -33,6 +33,8 @@ class Model:
             self.aktualen_sklop = sklop_vaj
 
     def izbrisi_sklop(self, sklop):
+        if sklop == self.aktualen_sklop:
+            self.aktualen_sklop = None
         self.sklopi_vaj.remove(sklop)
 
     def zamenjaj_sklop(self, sklop):
@@ -55,6 +57,8 @@ class Model:
             self.aktualna_skladba = skladba
 
     def izbrisi_skladbo(self, skladba):
+        if skladba == self.aktualna_skladba:
+            self.aktualna_skladba = None
         self.skladbe.remove(skladba)
 
     def zamenjaj_skladbo(self, skladba):
@@ -85,6 +89,8 @@ class Model:
             self.aktualen_zapisek = nov_zapisek
 
     def izbrisi_zapisek(self, zapisek):
+        if zapisek == self.aktualen_zapisek:
+            self.aktualen_zapisek = None
         self.zapiski.remove(zapisek)
 
     def zamenjaj_zapisek(self, zapisek):
@@ -101,6 +107,8 @@ class Model:
             self.aktualen_dogodek = dogodek
 
     def izbrisi_dogodek(self, dogodek):
+        if dogodek == self.aktualen_dogodek:
+            self.aktualen_dogodek = None
         self.dogodki.remove(dogodek)
 
     def zamenjaj_dogodek(self, dogodek):
