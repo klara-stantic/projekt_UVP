@@ -97,9 +97,11 @@ def zapiski():
 
 @bottle.get("/dodaj_zapisek/")
 def dodaj_zapisek():
+    moj_model = nalozi_uporabnikov_model()
     return bottle.template(
         "dodajanje_zapiska.html", 
-        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+        skladbe = moj_model.skladbe
     )
 
 
@@ -113,11 +115,20 @@ def dodaj_zapisek():
     else:
         datum = None
     zapisek = Zapisek(datum, predmet, ucitelj, vsebina)
+    zapisek.skladbe = bottle.request.forms.getall("skladbe_izbira")
     moj_model = nalozi_uporabnikov_model()
     moj_model.dodaj_zapisek(zapisek)
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/zapiski/')
-    
+
+@bottle.post("/izbrisi_zapisek/")
+def izbrisi_zapisek():
+    indeks = bottle.request.forms.getunicode("indeks")
+    moj_model = nalozi_uporabnikov_model()
+    zapisek = moj_model.zapiski[int(indeks)]
+    moj_model.izbrisi_zapisek(zapisek)
+    shrani_uporabnikov_model(moj_model)
+    bottle.redirect("/zapiski/")
 
 @bottle.get('/skladbe/')
 def skladbe():
@@ -145,7 +156,7 @@ def dodaj_skladbo():
     link = bottle.request.forms.getunicode("link")
     opombe = bottle.request.forms.getunicode("opombe")
     pazi = bottle.request.forms.getunicode("pazi")
-    pdf = bottle.request.forms.get("pdf")
+    pdf = bottle.request.forms.getall("pdf")
     skladba = Skladba(naslov, avtor)
     skladba.link = link
     skladba.pazi = pazi
@@ -170,7 +181,6 @@ def izbrisi_skladbo():
     indeks = bottle.request.forms.getunicode("indeks")
     moj_model = nalozi_uporabnikov_model()
     skladba = moj_model.skladbe[int(indeks)]
-    moj_model.aktualna_skladba = skladba
     moj_model.izbrisi_skladbo(skladba)
     shrani_uporabnikov_model(moj_model)
     bottle.redirect("/skladbe/")
@@ -192,7 +202,6 @@ def dodaj_dogodek():
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
     )
 
-
 @bottle.post("/dodaj_dogodek/")
 def dodaj_dogodek():
     kaj = bottle.request.forms.getunicode("kaj")
@@ -206,6 +215,15 @@ def dodaj_dogodek():
     moj_model.dodaj_dogodek(dogodek)
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/dogodki/')
+
+@bottle.post("/izbrisi_dogodek/")
+def izbrisi_dogodek():
+    indeks = bottle.request.forms.getunicode("indeks")
+    moj_model = nalozi_uporabnikov_model()
+    dogodek = moj_model.dogodki[int(indeks)]
+    moj_model.izbrisi_dogodek(dogodek)
+    shrani_uporabnikov_model(moj_model)
+    bottle.redirect("/dogodki/")
 
 @bottle.get('/vaje/')
 def vaje():
@@ -235,6 +253,14 @@ def dodaj_sklop():
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/vaje/')
 
+@bottle.post("/izbrisi_sklop/")
+def izbrisi_sklop():
+    indeks = bottle.request.forms.getunicode("indeks")
+    moj_model = nalozi_uporabnikov_model()
+    sklop = moj_model.sklopi_vaj[int(indeks)]
+    moj_model.izbrisi_sklop(sklop)
+    shrani_uporabnikov_model(moj_model)
+    bottle.redirect("/vaje/")
 
 @bottle.error(404)
 def error_404(error):
