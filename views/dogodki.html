@@ -17,68 +17,92 @@
 <div class="box">
     <article class="tile is-primary">
         <p class="subtitle">Število prihajajočih dogodkov: <button class="button is-static is-rounded">
-                {{st_dogodkov}} </button> 
+                {{st_dogodkov}} </button>
         </p>
         <br>
     </article>
     <div class="content">
         <div class="columns is-multiline is-mobile is-centered">
             % if dogodki:
-                % for indeks, dogodek in enumerate(dogodki):
-                    % if not dogodek.preteklost():
-                    <div class="column is-4 ">
-                        <div class="box has-background-warning">
-                            <p><strong>{{dogodek.kaj}}</strong>
-                                <br>
-                                <i>{{dogodek.kdaj}}</i> 
-                                <br>
-                            </p>
-                            % if dogodek.ura:
-                            <p><strong>Ura:</strong> {{dogodek.ura}}</a></p>
-                            % end
-                            % if dogodek.kje:
-                            <p><strong>Lokacija:</strong> {{dogodek.kje}}</p>
-                            %end
-                            % if dogodek.opombe:
-                            <p><strong>Opombe:</strong> {{dogodek.opombe}} </p>
-                            % end
-                            % if dogodek.skladbe:
-                            <ul>
-                                % for skladba in dogodek.skladbe:
-                                <li>{{skladba}}</li>
-                                %end
-                            </ul>
-                            % end
-                        </div>
-                    </div>
-                    % else:
-                    <div class="column is-4">
-                        <div class="box has-background-success">
-                            <p><strong>{{dogodek.kaj}}</strong>
-                                <br>
-                                <i>{{dogodek.kdaj}}</i> 
-                                <br>
-                            </p>
-                            % if dogodek.ura:
-                            <p><strong>Ura:</strong> {{dogodek.ura}}</a></p>
-                            % end
-                            % if dogodek.kje:
-                            <p><strong>Lokacija:</strong> {{dogodek.kje}}</p>
-                            %end
-                            % if dogodek.opombe:
-                            <p><strong>Opombe:</strong> {{dogodek.opombe}} </p>
-                            % end
-                            % if dogodek.skladbe:
-                            <ul>
-                                % for skladba in dogodek.skladbe:
-                                <li>{{skladba}}</li>
-                                %end
-                            </ul>
-                            % end
-                        </div>
-                    </div>
+            % for indeks, dogodek in enumerate(dogodki):
+            % if not dogodek.preteklost() and dogodek.kdaj:
+            <div class="column is-4 ">
+                <div class="box has-background-warning">
+                    <p><strong>{{dogodek.kaj}}</strong>
+                        <br>
+                        <i>{{dogodek.kdaj}}</i>
+                        <br>
+                    </p>
+                    % if dogodek.ura:
+                    <p><strong>Ura:</strong> {{dogodek.ura}}</a></p>
+                    % end
+                    % if dogodek.kje:
+                    <p><strong>Lokacija:</strong> {{dogodek.kje}}</p>
                     %end
-                % end
+                    % if dogodek.opombe:
+                    <p><strong>Opombe:</strong> {{dogodek.opombe}} </p>
+                    % end
+                    % if dogodek.skladbe:
+                    <ul>
+                        % for skladba in dogodek.skladbe:
+                        <li>{{skladba}}</li>
+                        %end
+                    </ul>
+                    % end
+                    <form method="POST" action="/izbrisi_dogodek/">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input type="hidden" name="indeks" value="{{indeks}}">
+                                <input class="input is_danger is-rounded is-narrow is-small" type="submit"
+                                    value="Izbriši">
+                                <span class="icon is-left is-small">
+                                    <i class="fas fa-minus"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            % else:
+            <div class="column is-4">
+                <div class="box has-background-success">
+                    <p><strong>{{dogodek.kaj}}</strong>
+                        <br>
+                        <i>{{dogodek.kdaj}}</i>
+                        <br>
+                    </p>
+                    % if dogodek.ura:
+                    <p><strong>Ura:</strong> {{dogodek.ura}}</a></p>
+                    % end
+                    % if dogodek.kje:
+                    <p><strong>Lokacija:</strong> {{dogodek.kje}}</p>
+                    %end
+                    % if dogodek.opombe:
+                    <p><strong>Opombe:</strong> {{dogodek.opombe}} </p>
+                    % end
+                    % if dogodek.skladbe:
+                    <ul>
+                        % for skladba in dogodek.skladbe:
+                        <li>{{skladba}}</li>
+                        %end
+                    </ul>
+                    %end
+                    <form method="POST" action="/izbrisi_dogodek/">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input type="hidden" name="indeks" value="{{indeks}}">
+                                <input class="input is_danger is-rounded is-narrow is-small" type="submit"
+                                    value="Izbriši">
+                                <span class="icon is-left is-small">
+                                    <i class="fas fa-minus"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            %end
+            % end
         </div>
         % else:
         <div>

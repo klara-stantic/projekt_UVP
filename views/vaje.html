@@ -37,6 +37,18 @@
                             <li>{{sklop}}</li>
                             %end
                         </ul>
+                        <form method="POST" action="/izbrisi_sklop/">
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input type="hidden" name="indeks" value="{{indeks}}">
+                                    <input class="input is_danger is-rounded is-narrow is-small" type="submit"
+                                        value="Izbriši">
+                                    <span class="icon is-left is-small">
+                                        <i class="fas fa-minus"></i>
+                                    </span>
+                                </p>
+                            </div>
+                        </form>
                         % end
                     </div>
                 </div>
