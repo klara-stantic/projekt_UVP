@@ -10,7 +10,7 @@ def nalozi_uporabnikov_model():
         try:
             return Model.preberi_iz_datoteke(uporabnisko_ime)
         except FileNotFoundError:
-                bottle.redirect("/registracija/")
+            bottle.redirect("/registracija/")
     else:
         bottle.redirect("/prijava/")
 
@@ -62,7 +62,7 @@ def odjava_post():
     bottle.redirect("/")
 
 
-#PRVA STRAN
+# PRVA STRAN
 @bottle.get('/')
 def osnovna_stran():
     if nalozi_uporabnikov_model():
@@ -72,16 +72,16 @@ def osnovna_stran():
     return bottle.template(
         "prva_stran.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-        skladbe = moj_model.skladbe if moj_model.skladbe else [], 
-        st_skladb = moj_model.stevilo_skladb(),
-        st_naucenih = moj_model.stevilo_naucenih(),
-        sklopi = moj_model.sklopi_vaj if moj_model.sklopi_vaj else [], 
-        st_sklopov = moj_model.stevilo_sklopov(),
-        dogodki = moj_model.dogodki if moj_model.dogodki else [],
-        st_dogodkov = moj_model.stevilo_prihajajocih(),
-        zapiski = moj_model.zapiski if moj_model.zapiski else[],
-        st_zapiskov = moj_model.stevilo_zapiskov(),
-        razmerje = float(moj_model.razmerje()),
+        skladbe=moj_model.skladbe if moj_model.skladbe else [],
+        st_skladb=moj_model.stevilo_skladb(),
+        st_naucenih=moj_model.stevilo_naucenih(),
+        sklopi=moj_model.sklopi_vaj if moj_model.sklopi_vaj else [],
+        st_sklopov=moj_model.stevilo_sklopov(),
+        dogodki=moj_model.dogodki if moj_model.dogodki else [],
+        st_dogodkov=moj_model.stevilo_prihajajocih(),
+        zapiski=moj_model.zapiski if moj_model.zapiski else[],
+        st_zapiskov=moj_model.stevilo_zapiskov(),
+        razmerje=float(moj_model.razmerje()),
     )
 
 
@@ -91,22 +91,24 @@ def zapiski():
     return bottle.template(
         "zapiski.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-        zapiski = moj_model.zapiski if moj_model.zapiski else[],
-        st_zapiskov = moj_model.stevilo_zapiskov(),
+        zapiski=moj_model.zapiski if moj_model.zapiski else[],
+        st_zapiskov=moj_model.stevilo_zapiskov(),
     )
+
 
 @bottle.get("/dodaj_zapisek/")
 def dodaj_zapisek():
     moj_model = nalozi_uporabnikov_model()
     return bottle.template(
-        "dodajanje_zapiska.html", 
+        "dodajanje_zapiska.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-        skladbe = moj_model.skladbe
+        skladbe=moj_model.skladbe
     )
 
 
 @bottle.post("/dodaj_zapisek/")
 def dodaj_zapisek():
+    moj_model = nalozi_uporabnikov_model()
     predmet = bottle.request.forms.getunicode("predmet")
     ucitelj = bottle.request.forms.getunicode("ucitelj")
     vsebina = bottle.request.forms.getunicode("vsebina")
@@ -115,11 +117,14 @@ def dodaj_zapisek():
     else:
         datum = None
     zapisek = Zapisek(datum, predmet, ucitelj, vsebina)
-    zapisek.skladbe = bottle.request.forms.getall("skladbe_izbira")
-    moj_model = nalozi_uporabnikov_model()
+    izbira = bottle.request.forms.getall("skladbe_izbira")
+    if izbira:
+        for indeks in izbira:
+            zapisek.skladbe.append(moj_model.skladbe[int(indeks)])
     moj_model.dodaj_zapisek(zapisek)
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/zapiski/')
+
 
 @bottle.post("/izbrisi_zapisek/")
 def izbrisi_zapisek():
@@ -130,21 +135,23 @@ def izbrisi_zapisek():
     shrani_uporabnikov_model(moj_model)
     bottle.redirect("/zapiski/")
 
+
 @bottle.get('/skladbe/')
 def skladbe():
     moj_model = nalozi_uporabnikov_model()
     return bottle.template(
         "skladbe.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-        skladbe = moj_model.skladbe if moj_model.skladbe else [], 
-        st_skladb = moj_model.stevilo_skladb(),
-        razmerje = float(moj_model.razmerje()),
+        skladbe=moj_model.skladbe if moj_model.skladbe else [],
+        st_skladb=moj_model.stevilo_skladb(),
+        razmerje=float(moj_model.razmerje()),
     )
+
 
 @bottle.get("/dodaj_skladbo/")
 def dodaj_skladbo():
     return bottle.template(
-        "dodajanje_skladbe.html", 
+        "dodajanje_skladbe.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
     )
 
@@ -167,6 +174,7 @@ def dodaj_skladbo():
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/skladbe/')
 
+
 @bottle.post("/nauceno/")
 def nauceno():
     indeks = bottle.request.forms.getunicode("indeks")
@@ -175,6 +183,7 @@ def nauceno():
     skladba.nauci_se()
     shrani_uporabnikov_model(moj_model)
     bottle.redirect("/skladbe/")
+
 
 @bottle.post("/izbrisi_skladbo/")
 def izbrisi_skladbo():
@@ -185,22 +194,25 @@ def izbrisi_skladbo():
     shrani_uporabnikov_model(moj_model)
     bottle.redirect("/skladbe/")
 
+
 @bottle.get('/dogodki/')
 def dogodki():
     moj_model = nalozi_uporabnikov_model()
     return bottle.template(
         "dogodki.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-        dogodki = moj_model.dogodki if moj_model.dogodki else [],
-        st_dogodkov = moj_model.stevilo_prihajajocih(),
+        dogodki=moj_model.dogodki if moj_model.dogodki else [],
+        st_dogodkov=moj_model.stevilo_prihajajocih(),
     )
+
 
 @bottle.get("/dodaj_dogodek/")
 def dodaj_dogodek():
     return bottle.template(
-        "dodajanje_dogodka.html", 
+        "dodajanje_dogodka.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
     )
+
 
 @bottle.post("/dodaj_dogodek/")
 def dodaj_dogodek():
@@ -216,6 +228,7 @@ def dodaj_dogodek():
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/dogodki/')
 
+
 @bottle.post("/izbrisi_dogodek/")
 def izbrisi_dogodek():
     indeks = bottle.request.forms.getunicode("indeks")
@@ -225,20 +238,22 @@ def izbrisi_dogodek():
     shrani_uporabnikov_model(moj_model)
     bottle.redirect("/dogodki/")
 
+
 @bottle.get('/vaje/')
 def vaje():
     moj_model = nalozi_uporabnikov_model()
     return bottle.template(
         "vaje.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-        sklopi = moj_model.sklopi_vaj if moj_model.sklopi_vaj else [], 
-        st_sklopov = moj_model.stevilo_sklopov(),
+        sklopi=moj_model.sklopi_vaj if moj_model.sklopi_vaj else [],
+        st_sklopov=moj_model.stevilo_sklopov(),
     )
+
 
 @bottle.get("/dodaj_sklop/")
 def dodaj_sklop():
     return bottle.template(
-        "dodajanje_sklopov.html", 
+        "dodajanje_sklopov.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
     )
 
@@ -253,6 +268,7 @@ def dodaj_sklop():
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/vaje/')
 
+
 @bottle.post("/izbrisi_sklop/")
 def izbrisi_sklop():
     indeks = bottle.request.forms.getunicode("indeks")
@@ -262,8 +278,10 @@ def izbrisi_sklop():
     shrani_uporabnikov_model(moj_model)
     bottle.redirect("/vaje/")
 
+
 @bottle.error(404)
 def error_404(error):
     return "Ta stran ne obstaja!"
+
 
 bottle.run(reloader=True)

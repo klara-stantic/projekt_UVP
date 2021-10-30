@@ -32,6 +32,26 @@
             <input class="input" type="text" name="vsebina" placeholder="Vnesi vsebino lekcije">
         </div>
     </div>
+
+    <div class="field">
+        <label class="label">Skladbe</label>
+        % if skladbe:
+        <div class="control">
+            <select name="skladbe_izbira" multiple size="4">
+                % for indeks, skladba in enumerate(skladbe): 
+                    <option value={{indeks}}>{{skladba.naslov}}</option>
+                % end                
+            </select>
+        </div>
+        % end
+        <br>
+        <p>
+            <a href="/dodaj_skladbo/">Dodaj nove skladbe.</a>
+        </p>
+    </div>
+
+
+
     <br>
     <div class="columns">
         <div class="column is-2">
@@ -48,5 +68,5 @@
                 <a class="button is-link is-light" href="/zapiski/">Prekliči</a>
             </div>
         </div>
-    </div>   
+    </div>
 </form>
