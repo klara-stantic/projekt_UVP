@@ -14,5 +14,5 @@ Pozor - med uporabo se vam bo za vsakega uporabnika ustvarila ena .json datoteka
 Uporaba beležke je zelo intuitivna. Vanjo se najprej prijavite, ob prvi uporabi pa registrirate, z uporabniškim imenom. 
 Na domači strani najdete prikaz vseh štirih razdelkov, kjer lahko hitro preverite število posameznih elementov - skladb/dogodkov itd., ki ste jih v razdelek shranili. 
 Za urejanje razdelkov lahko kliknete bodisi na ime razdelka v prikazu na domači strani, bodisi na ime razdelka na vrhu strani. Na začetku vsakega razdelka imaste gumb "dodaj ...", na katerega kliknete, ko želite dodati element. Pri tem sledite navodilom znotraj programa. Pod gumbom je spet navedeno število elementov, pri skladbah pa je na vrhu strani še grafičen prikaz razmerja med naučenimi in nenaučenimi skladbami. Posamezni elementi so navedeni na preostanku strani, pri čemer so dogodki obarvani zeleno, če so že minili oz. nimajo datuma, sicer pa so rumene barve.
-Elemente lahko po želji pobrišete s klikom na gumb "Izbriši". 
+Elemente lahko po želji pobrišete s klikom na gumb "Izbriši". \n
 Po uporabi se odjavite s klikom na gumb "Odjava".
