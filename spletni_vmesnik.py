@@ -208,14 +208,17 @@ def dogodki():
 
 @bottle.get("/dodaj_dogodek/")
 def dodaj_dogodek():
+    moj_model = nalozi_uporabnikov_model()
     return bottle.template(
         "dodajanje_dogodka.html",
-        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"), 
+        skladbe=moj_model.skladbe
     )
 
 
 @bottle.post("/dodaj_dogodek/")
 def dodaj_dogodek():
+    moj_model = nalozi_uporabnikov_model()
     kaj = bottle.request.forms.getunicode("kaj")
     kdaj = bottle.request.forms.getunicode("kdaj")
     kje = bottle.request.forms.getunicode("kje")
@@ -223,7 +226,10 @@ def dodaj_dogodek():
     opombe = bottle.request.forms.getunicode("opombe")
     dogodek = Dogodek(kaj, kdaj, ura, kje)
     dogodek.opombe = opombe
-    moj_model = nalozi_uporabnikov_model()
+    izbira = bottle.request.forms.getall("skladbe_izbira")
+    if izbira:
+        for indeks in izbira:
+            dogodek.skladbe.append(moj_model.skladbe[int(indeks)])    
     moj_model.dodaj_dogodek(dogodek)
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/dogodki/')
