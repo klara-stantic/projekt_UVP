@@ -76,7 +76,8 @@ class Model:
 
     def razmerje(self):
         if self.skladbe:
-            procenti = (int(self.stevilo_naucenih()) * 100) / int(self.stevilo_skladb())
+            procenti = (int(self.stevilo_naucenih()) * 100) / \
+                int(self.stevilo_skladb())
             return f"{procenti:.3}"
         else:
             return 0
@@ -120,7 +121,7 @@ class Model:
     def stevilo_preteklih(self):
         pretekli = []
         for dogodek in self.dogodki:
-            if dogodek.preteklost():
+            if dogodek.preteklost() or not dogodek.kdaj:
                 pretekli.append(dogodek)
         return len(pretekli)
 
