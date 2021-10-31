@@ -381,7 +381,6 @@ class Skladba:
         self.pazi = ""
         self.pdf = []
         self.nauceno = False
-        self.oznake = []
 
     def __str__(self):
         niz = f"{self.naslov} avtorja {self.avtor}"
@@ -399,7 +398,6 @@ class Skladba:
             "pazi": self.pazi,
             "pdf": self.pdf,
             "nauceno": self.nauceno,
-            "oznake": self.oznake,
         }
 
     @staticmethod
@@ -410,7 +408,6 @@ class Skladba:
         skladba.pdf = slovar["pdf"]
         skladba.opombe = slovar["opombe"]
         skladba.nauceno = slovar["nauceno"]
-        skladba.oznake = slovar["oznake"]
         return skladba
 
 
