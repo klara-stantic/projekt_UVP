@@ -121,7 +121,7 @@ def dodaj_zapisek():
         return bottle.template("dodajanje_zapiska.html", napake=napake,
                                uporabnisko_ime=bottle.request.get_cookie(
                                    "uporabnisko_ime"),
-                               skladbe=moj_model.skladbe, 
+                               skladbe=moj_model.skladbe,
                                )
     else:
         zapisek = Zapisek(datum, predmet, ucitelj, vsebina)
@@ -160,8 +160,8 @@ def skladbe():
 def dodaj_skladbo():
     return bottle.template(
         "dodajanje_skladbe.html",
-        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"), 
-        napake = {}
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+        napake={}
     )
 
 
@@ -178,8 +178,8 @@ def dodaj_skladbo():
     if napake:
         return bottle.template(
             "dodajanje_skladbe.html",
-            uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"), 
-            napake = napake, 
+            uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+            napake=napake,
         )
     else:
         skladba = Skladba(naslov, avtor)
@@ -229,8 +229,8 @@ def dodaj_dogodek():
     return bottle.template(
         "dodajanje_dogodka.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-        skladbe=moj_model.skladbe, 
-        napake = {}
+        skladbe=moj_model.skladbe,
+        napake={}
     )
 
 
@@ -247,8 +247,8 @@ def dodaj_dogodek():
         return bottle.template(
             "dodajanje_dogodka.html",
             uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-            skladbe=moj_model.skladbe, 
-            napake = napake, 
+            skladbe=moj_model.skladbe,
+            napake=napake,
         )
     else:
         dogodek = Dogodek(kaj, kdaj, ura, kje)
@@ -290,7 +290,7 @@ def dodaj_sklop():
         "dodajanje_sklopov.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         vaje=moj_model.vaje,
-        napake = {}
+        napake={}
     )
 
 
@@ -305,7 +305,7 @@ def dodaj_sklop():
             "dodajanje_sklopov.html",
             uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
             vaje=moj_model.vaje,
-            napake = napake, 
+            napake=napake,
         )
     else:
         sklop = Sklop_vaj(ime, opis)
@@ -336,7 +336,7 @@ def vaje():
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         vaje=moj_model.vaje if moj_model.vaje else [],
         st_vaj=moj_model.stevilo_vaj(),
-        napake = {},
+        napake={},
     )
 
 
@@ -351,7 +351,7 @@ def dodaj_vajo():
             uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
             vaje=moj_model.vaje if moj_model.vaje else [],
             st_vaj=moj_model.stevilo_vaj(),
-            napake = napake, 
+            napake=napake,
         )
     else:
         vaja = Vaja(opis)

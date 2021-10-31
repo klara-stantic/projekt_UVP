@@ -9,7 +9,7 @@
 <div class="box">
     <article class="tile is-primary">
         <p class="subtitle">Število vseh zapiskov: <button class="button is-static is-rounded">
-                {{st_zapiskov}} </button> 
+                {{st_zapiskov}} </button>
         </p>
         <br>
     </article>
@@ -24,50 +24,51 @@
     <div class="content">
         <div class="columns is-multiline is-mobile is-centered">
             % if zapiski:
-                % for indeks, zapisek in enumerate(zapiski):
-                <div class="column is-4">
-                    <div class="box has-background-primary-light">
-                        <div class="box has-background-primary">
-                            <p><strong>{{zapisek.predmet}}</strong>
-                                <br>                         
-                                % if zapisek.datum:
-                                    <p><i>{{zapisek.datum}}</i></p>
-                                % end
-                            </p>
-                        </div>
-                        <p><i>{{zapisek.ucitelj}}</i></p>
-                        % if zapisek.vsebina:
-                        <p><strong>Vsebina:</strong> {{zapisek.vsebina}}</p>
-                        %end
-                        % if zapisek.skladbe:
-                        <strong>Skladbe: </strong>
-                        <ul>
-                            % for skladba in zapisek.skladbe:
-                            <li>{{skladba.naslov}}</li>
-                            %end
-                        </ul>
+            % for indeks, zapisek in enumerate(zapiski):
+            <div class="column is-4">
+                <div class="box has-background-primary-light">
+                    <div class="box has-background-primary">
+                        <p><strong>{{zapisek.predmet}}</strong>
+                            <br>
+                            % if zapisek.datum:
+                        <p><i>{{zapisek.datum}}</i></p>
                         % end
-                        <div class="container">
-                            <div class="columns">
-                                <div class="column is-narrow">
-                                    <form method="POST" action="/izbrisi_zapisek/">
-                                        <div class="field">
-                                            <p class="control has-icons-left">
-                                                <input type="hidden" name="indeks" value="{{indeks}}">
-                                                <input class="input has-background-danger-light is-danger has-text-danger is-rounded is-small" type="submit"
-                                                    value="Izbriši">
-                                                <span class="icon is-left is-small">
-                                                    <i class="fas fa-minus"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </form>
-                                </div>
+                        </p>
+                    </div>
+                    <p><i>{{zapisek.ucitelj}}</i></p>
+                    % if zapisek.vsebina:
+                    <p><strong>Vsebina:</strong> {{zapisek.vsebina}}</p>
+                    %end
+                    % if zapisek.skladbe:
+                    <strong>Skladbe: </strong>
+                    <ul>
+                        % for skladba in zapisek.skladbe:
+                        <li>{{skladba.naslov}}</li>
+                        %end
+                    </ul>
+                    % end
+                    <div class="container">
+                        <div class="columns">
+                            <div class="column is-narrow">
+                                <form method="POST" action="/izbrisi_zapisek/">
+                                    <div class="field">
+                                        <p class="control has-icons-left">
+                                            <input type="hidden" name="indeks" value="{{indeks}}">
+                                            <input
+                                                class="input has-background-danger-light is-danger has-text-danger is-rounded is-small"
+                                                type="submit" value="Izbriši">
+                                            <span class="icon is-left is-small">
+                                                <i class="fas fa-minus"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                % end
+            </div>
+            % end
         </div>
         % else:
         <div>
@@ -76,4 +77,3 @@
         %end
     </div>
 </div>
-

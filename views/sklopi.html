@@ -16,7 +16,7 @@
 <div class="box">
     <article class="tile is-primary">
         <p class="subtitle">Število vseh sklopov vaj: <button class="button is-static is-rounded">
-                {{st_sklopov}} </button> 
+                {{st_sklopov}} </button>
         </p>
         <br>
     </article>
@@ -31,44 +31,45 @@
     <div class="content">
         <div class="columns is-multiline is-mobile is-centered">
             % if sklopi:
-                % for indeks, sklop in enumerate(sklopi):
-                <div class="column is-4">
-                    <div class="box has-background-info-light">
-                        <div class="box has-background-info">
-                            <p><strong>{{sklop.ime}}</strong>
-                                <br>
-                                <i>{{sklop.opis}}</i> 
-                                <br>
-                            </p>
-                        </div>
-                        % if sklop.vaje:
-                        <ul>
-                            % for vaja in sklop.vaje:
-                            <li>{{vaja.opis}}</li>
-                            %end
-                        </ul>
-                        <div class="container">
-                            <div class="columns">
-                                <div class="column is-narrow">
-                                    <form method="POST" action="/izbrisi_sklop/">
-                                        <div class="field">
-                                            <p class="control has-icons-left">
-                                                <input type="hidden" name="indeks" value="{{indeks}}">
-                                                <input class="input is-rounded is-danger has-text-danger is-small has-background-danger-light" type="submit"
-                                                    value="Izbriši">
-                                                <span class="icon is-left is-small">
-                                                    <i class="fas fa-minus"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </form>
-                                </div>
+            % for indeks, sklop in enumerate(sklopi):
+            <div class="column is-4">
+                <div class="box has-background-info-light">
+                    <div class="box has-background-info">
+                        <p><strong>{{sklop.ime}}</strong>
+                            <br>
+                            <i>{{sklop.opis}}</i>
+                            <br>
+                        </p>
+                    </div>
+                    % if sklop.vaje:
+                    <ul>
+                        % for vaja in sklop.vaje:
+                        <li>{{vaja.opis}}</li>
+                        %end
+                    </ul>
+                    <div class="container">
+                        <div class="columns">
+                            <div class="column is-narrow">
+                                <form method="POST" action="/izbrisi_sklop/">
+                                    <div class="field">
+                                        <p class="control has-icons-left">
+                                            <input type="hidden" name="indeks" value="{{indeks}}">
+                                            <input
+                                                class="input is-rounded is-danger has-text-danger is-small has-background-danger-light"
+                                                type="submit" value="Izbriši">
+                                            <span class="icon is-left is-small">
+                                                <i class="fas fa-minus"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        % end
                     </div>
+                    % end
                 </div>
-                % end
+            </div>
+            % end
         </div>
         % else:
         <div>
@@ -77,4 +78,3 @@
         %end
     </div>
 </div>
-

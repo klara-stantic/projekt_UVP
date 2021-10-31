@@ -15,7 +15,7 @@
         </p>
         <br>
     </article>
-    
+
     <div class="block">
         <div class="notification is-primary">
             DODAJANJE VAJE
@@ -34,7 +34,7 @@
                     {{napake.get("opis")}}
                 </p>
             </div>
-        
+
             <br>
             <div class="columns">
                 <div class="column is-2">
@@ -51,38 +51,39 @@
                         <a class="button is-link is-light" href="/vaje/">Prekliči</a>
                     </div>
                 </div>
-            </div>   
+            </div>
         </form>
     </div>
 
     <div class="content">
         <div class="box">
             % if vaje:
-                % for indeks, vaja in enumerate(vaje):
-                <ul>
-                    <li>
-                        <p><strong>{{vaja.opis}}</strong></p>
-                        <div class="container">
-                            <div class="columns">
-                                <div class="column is-narrow">
-                                    <form method="POST" action="/izbrisi_vajo/">
-                                        <div class="field">
-                                            <p class="control has-icons-left">
-                                                <input type="hidden" name="indeks" value="{{indeks}}">
-                                                <input class="input is-rounded is-danger has-text-danger is-small has-background-danger-light" type="submit"
-                                                    value="Izbriši">
-                                                <span class="icon is-left is-small">
+            % for indeks, vaja in enumerate(vaje):
+            <ul>
+                <li>
+                    <p><strong>{{vaja.opis}}</strong></p>
+                    <div class="container">
+                        <div class="columns">
+                            <div class="column is-narrow">
+                                <form method="POST" action="/izbrisi_vajo/">
+                                    <div class="field">
+                                        <p class="control has-icons-left">
+                                            <input type="hidden" name="indeks" value="{{indeks}}">
+                                            <input
+                                                class="input is-rounded is-danger has-text-danger is-small has-background-danger-light"
+                                                type="submit" value="Izbriši">
+                                            <span class="icon is-left is-small">
                                                 <i class="fas fa-minus"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </form>
-                                </div>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </li>
-                </ul>
-                % end
+                    </div>
+                </li>
+            </ul>
+            % end
             % else:
             <div>
                 <p>Nimate še shranjenih vaj.</p>
@@ -91,4 +92,3 @@
         </div>
     </div>
 </div>
-

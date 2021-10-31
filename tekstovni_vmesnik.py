@@ -168,7 +168,7 @@ def izberi_vajo(model):
 def izberi_skladbo(model):
     return izberi_moznost([(skladba, prikaz_skladbe(skladba)) for skladba in model.skladbe])
 
-#def izberi_skladbo_2(model):
+# def izberi_skladbo_2(model):
 #    """Ko potrebuješ izbiro za novo skladbo (dogodki, zapiski)"""
 #    return izberi_moznost(["nova", "Nova skladba"] + [(skladba, prikaz_skladbe(skladba)) for skladba in model.skladbe])
 
@@ -307,7 +307,6 @@ def pobrisi_skladbo():
     skladba = izberi_skladbo(moj_model)
     moj_model.izbrisi_skladbo(skladba)
     moj_model.aktualna_skladba = None
-    
 
 
 def zamenjaj_skladbo():
@@ -409,7 +408,7 @@ def dodaj_skladbo_dogodku():
             nova_skladba = Skladba(naslov, avtor)
             moj_model.dodaj_skladbo(nova_skladba)
             dogodek.dodaj_skladbo(nova_skladba)
-            
+
 
 def urejanje_zapiskov():
     while True:
@@ -434,6 +433,7 @@ def urejanje_zapiskov():
             dodaj_skladbo_zapisku()
         elif vnos == ZAKLJUCI_ZAPISEK:
             break
+
 
 def dodaj_zapisek():
     print("Vnesite podatke novega zapiska.")
@@ -462,6 +462,7 @@ def zamenjaj_zapisek():
     zapisek = izberi_zapisek(moj_model)
     moj_model.zamenjaj_zapisek(zapisek)
 
+
 def dodaj_skladbo_zapisku():
     zapisek = moj_model.aktualen_zapisek
     if moj_model.skladbe:
@@ -480,5 +481,6 @@ def dodaj_skladbo_zapisku():
             nova_skladba = Skladba(naslov, avtor)
             moj_model.dodaj_skladbo(nova_skladba)
             zapisek.dodaj_skladbo_lekcija(nova_skladba)
+
 
 tekstovni_vmesnik()
