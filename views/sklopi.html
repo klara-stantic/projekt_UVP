@@ -1,0 +1,73 @@
+% rebase('baza.html')
+
+<div class="block">
+    <h1 class="title">Sklopi vaj</h1>
+</div>
+
+<div class="block">
+    <button class="button is-rounded is-success is-light">
+        <span class="icon is-small">
+            <i class="fas fa-bookmark"></i>
+        </span>
+        <a href="/vaje/"> Seznam vaj </a>
+    </button>
+</div>
+
+<div class="box">
+    <article class="tile is-primary">
+        <p class="subtitle">Število vseh sklopov vaj: <button class="button is-static is-rounded">
+                {{st_sklopov}} </button> 
+        </p>
+        <br>
+    </article>
+    <div class="block">
+        <button class="button is-rounded is-link is-light">
+            <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+            </span>
+            <a href="/dodaj_sklop/"> Dodaj sklop vaj </a>
+        </button>
+    </div>
+    <div class="content">
+        <div class="columns is-multiline is-mobile is-centered">
+            % if sklopi:
+                % for indeks, sklop in enumerate(sklopi):
+                <div class="column is-4">
+                    <div class="box has-background-info-light">
+                        <div class="box has-background-info">
+                            <p><strong>{{sklop.ime}}</strong>
+                                <br>
+                                <i>{{sklop.opis}}</i> 
+                                <br>
+                            </p>
+                        </div>
+                        % if sklop.vaje:
+                        <ul>
+                            % for vaja in sklop.vaje:
+                            <li>{{vaja.opis}}</li>
+                            %end
+                        </ul>
+                        <form method="POST" action="/izbrisi_sklop/">
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input type="hidden" name="indeks" value="{{indeks}}">
+                                    <input class="input is_danger is-rounded is-narrow is-small" type="submit"
+                                        value="Izbriši">
+                                    <span class="icon is-left is-small">
+                                        <i class="fas fa-minus"></i>
+                                    </span>
+                                </p>
+                            </div>
+                        </form>
+                        % end
+                    </div>
+                </div>
+                % end
+        </div>
+        % else:
+        <div>
+            <p>Nimate še shranjenih sklopov vaj.</p>
+        </div>
+        %end
+    </div>
+</div>

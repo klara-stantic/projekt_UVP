@@ -245,11 +245,11 @@ def izbrisi_dogodek():
     bottle.redirect("/dogodki/")
 
 
-@bottle.get('/vaje/')
-def vaje():
+@bottle.get('/sklopi/')
+def sklopi():
     moj_model = nalozi_uporabnikov_model()
     return bottle.template(
-        "vaje.html",
+        "sklopi.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         sklopi=moj_model.sklopi_vaj if moj_model.sklopi_vaj else [],
         st_sklopov=moj_model.stevilo_sklopov(),
@@ -258,21 +258,27 @@ def vaje():
 
 @bottle.get("/dodaj_sklop/")
 def dodaj_sklop():
+    moj_model = nalozi_uporabnikov_model()
     return bottle.template(
         "dodajanje_sklopov.html",
-        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"), 
+        vaje = moj_model.vaje,
     )
 
 
 @bottle.post("/dodaj_sklop/")
 def dodaj_sklop():
+    moj_model = nalozi_uporabnikov_model()
     ime = bottle.request.forms.getunicode("ime")
     opis = bottle.request.forms.getunicode("opis")
     sklop = Sklop_vaj(ime, opis)
-    moj_model = nalozi_uporabnikov_model()
+    izbira = bottle.request.forms.getall("vaje_izbira")
+    if izbira:
+        for indeks in izbira:
+            sklop.vaje.append(moj_model.vaje[int(indeks)])
     moj_model.dodaj_sklop(sklop)
     shrani_uporabnikov_model(moj_model)
-    bottle.redirect('/vaje/')
+    bottle.redirect('/sklopi/')
 
 
 @bottle.post("/izbrisi_sklop/")
@@ -282,8 +288,38 @@ def izbrisi_sklop():
     sklop = moj_model.sklopi_vaj[int(indeks)]
     moj_model.izbrisi_sklop(sklop)
     shrani_uporabnikov_model(moj_model)
-    bottle.redirect("/vaje/")
+    bottle.redirect("/sklopi/")
 
+
+@bottle.get('/vaje/')
+def vaje():
+    moj_model = nalozi_uporabnikov_model()
+    return bottle.template(
+        "vaje.html",
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+        vaje = moj_model.vaje if moj_model.vaje else [],
+        st_vaj = moj_model.stevilo_vaj(),
+    )
+
+
+@bottle.post("/dodaj_vajo/")
+def dodaj_vajo():
+    opis = bottle.request.forms.getunicode("opis")
+    vaja = Vaja(opis)
+    moj_model = nalozi_uporabnikov_model()
+    moj_model.dodaj_vajo(vaja)
+    shrani_uporabnikov_model(moj_model)
+    bottle.redirect('/vaje/')
+
+
+@bottle.post("/izbrisi_vajo/")
+def izbrisi_vajo():
+    indeks = bottle.request.forms.getunicode("indeks")
+    moj_model = nalozi_uporabnikov_model()
+    vaja = moj_model.vaje[int(indeks)]
+    moj_model.izbrisi_vajo(vaja)
+    shrani_uporabnikov_model(moj_model)
+    bottle.redirect("/vaje/")
 
 @bottle.error(404)
 def error_404(error):

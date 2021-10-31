@@ -19,6 +19,23 @@
         </div>
     </div>
 
+    <div class="field">
+        <label class="label">Vaje</label>
+        % if vaje:
+        <div class="control">
+            <select name="vaje_izbira" multiple size="4">
+                % for indeks, vaja in enumerate(vaje):
+                <option value={{indeks}}>{{vaja.opis}}</option>
+                % end
+            </select>
+        </div>
+        % end
+        <br>
+        <p>
+            <a href="/vaje/">Dodaj nove vaje.</a>
+        </p>
+    </div>
+
     <br>
     <div class="columns">
         <div class="column is-2">

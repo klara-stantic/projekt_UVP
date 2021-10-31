@@ -4,60 +4,73 @@
     <h1 class="title">Vaje</h1>
 </div>
 
-<div class="block">
-    <button class="button is-rounded is-link is-light">
-        <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-        </span>
-        <a href="/dodaj_sklop/"> Dodaj sklop vaj </a>
-    </button>
-</div>
-
 <div class="box">
     <article class="tile is-primary">
         <p class="subtitle">Število vseh vaj: <button class="button is-static is-rounded">
-                {{st_sklopov}} </button> 
+                {{st_vaj}} </button>
         </p>
         <br>
     </article>
+    
+    <div class="block">
+        <div class="notification is-primary">
+            DODAJANJE VAJE
+        </div>
+        <form method="POST" action="/dodaj_vajo/" Class="box">
+            <div class="field">
+                <label class="label">Opis</label>
+                <div class="control">
+                    <input class="input" type="text" name="opis" placeholder="Vnesi kratek opis vaje.">
+                </div>
+            </div>
+        
+            <br>
+            <div class="columns">
+                <div class="column is-2">
+                    <div class="control">
+                        <button class="button is-link">
+                            <imput type="submit">
+                                Dodaj
+                            </imput>
+                        </button>
+                    </div>
+                </div>
+                <div class="column is-2">
+                    <div class="control">
+                        <a class="button is-link is-light" href="/vaje/">Prekliči</a>
+                    </div>
+                </div>
+            </div>   
+        </form>
+    </div>
+
     <div class="content">
-        <div class="columns is-multiline is-mobile is-centered">
-            % if sklopi:
-                % for indeks, sklop in enumerate(sklopi):
-                <div class="column is-4">
-                    <div class="box has-background-info">
-                        <p><strong>{{sklop.ime}}</strong>
-                            <br>
-                            <i>{{sklop.opis}}</i> 
-                            <br>
-                        </p>
-                        % if sklop.vaje:
-                        <ul>
-                            % for sklop in sklop.vaje:
-                            <li>{{sklop}}</li>
-                            %end
-                        </ul>
-                        <form method="POST" action="/izbrisi_sklop/">
+        <div class="box">
+            % if vaje:
+                % for indeks, vaja in enumerate(vaje):
+                <ul>
+                    <li>
+                        <p><strong>{{vaja.opis}}</strong></p>
+                        <form method="POST" action="/izbrisi_vajo/">
                             <div class="field">
                                 <p class="control has-icons-left">
                                     <input type="hidden" name="indeks" value="{{indeks}}">
                                     <input class="input is_danger is-rounded is-narrow is-small" type="submit"
                                         value="Izbriši">
                                     <span class="icon is-left is-small">
-                                        <i class="fas fa-minus"></i>
+                                    <i class="fas fa-minus"></i>
                                     </span>
                                 </p>
                             </div>
                         </form>
-                        % end
-                    </div>
-                </div>
+                    </li>
+                </ul>
                 % end
+            % else:
+            <div>
+                <p>Nimate še shranjenih vaj.</p>
+            </div>
+            %end
         </div>
-        % else:
-        <div>
-            <p>Nimate še shranjenih sklopov vaj.</p>
-        </div>
-        %end
     </div>
 </div>
