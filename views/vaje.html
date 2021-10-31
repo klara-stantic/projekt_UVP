@@ -4,6 +4,10 @@
     <h1 class="title">Vaje</h1>
 </div>
 
+<div class="block">
+    <h2 class="title"><a href="/sklopi/">Nazaj na sklope vaj</a></h1>
+</div>
+
 <div class="box">
     <article class="tile is-primary">
         <p class="subtitle">Število vseh vaj: <button class="button is-static is-rounded">
@@ -16,12 +20,19 @@
         <div class="notification is-primary">
             DODAJANJE VAJE
         </div>
+        <p>Z * označena polja so obvezna.</p>
+        <p class="has-text-danger">
+            {{napake.get("vaja")}}
+        </p>
         <form method="POST" action="/dodaj_vajo/" Class="box">
             <div class="field">
-                <label class="label">Opis</label>
+                <label class="label">Opis<p class="has-text-danger">*</p></label>
                 <div class="control">
                     <input class="input" type="text" name="opis" placeholder="Vnesi kratek opis vaje.">
                 </div>
+                <p class="has-text-danger">
+                    {{napake.get("opis")}}
+                </p>
             </div>
         
             <br>

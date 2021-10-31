@@ -32,6 +32,15 @@ class Model:
         self.sklopi_vaj.append(sklop_vaj)
         if not self.aktualen_sklop:
             self.aktualen_sklop = sklop_vaj
+    
+    def preveri_sklop(self, ime, opis):
+        napake = {}
+        if not ime:
+            napake["ime"] = "Ta razdelek je obvezen."
+        for sklop in self.sklopi_vaj:
+            if sklop.ime == ime:
+                napake["sklop"] = "Ta sklop je že zaseden!"
+        return napake
 
     def izbrisi_sklop(self, sklop):
         if sklop == self.aktualen_sklop:
@@ -43,6 +52,15 @@ class Model:
 
     def dodaj_vajo(self, vaja):
         self.vaje.append(vaja)
+    
+    def preveri_vajo(self, opis):
+        napake = {}
+        if not opis:
+            napake["opis"] = "Ta razdelek je obvezen."
+        for vaja in self.vaje:
+            if vaja.opis == opis:
+                napake["vaja"] = "Ta vaja je že zasedena"
+        return napake
 
     def izbrisi_vajo(self, vaja):
         for sklop in self.sklopi_vaj:
@@ -62,6 +80,18 @@ class Model:
         self.skladbe.append(skladba)
         if not self.aktualna_skladba:
             self.aktualna_skladba = skladba
+
+    def preveri_skladbo(self, naslov, avtor):
+        napake = {}
+        if not naslov:
+            napake["naslov"] = "Ta razdelek je obvezen."
+        if not avtor:
+            napake["avtor"] = "Ta razdelek je obvezen."
+        for skladba in self.skladbe:
+            if skladba.naslov == naslov and skladba.avtor == avtor:
+                napake["skladba"] = "Ta skladba je že zasedena"
+        return napake
+
 
     def izbrisi_skladbo(self, skladba):
         if skladba == self.aktualna_skladba:

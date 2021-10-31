@@ -3,13 +3,19 @@
 <div class="notification is-primary">
     DODAJANJE SKLOPA VAJ
 </div>
-
+<p>Z * označena polja so obvezna.</p>
+<p class="has-text-danger">
+    {{napake.get("sklop")}}
+</p>
 <form method="POST" action="/dodaj_sklop/" Class="box">
     <div class="field">
-        <label class="label">Naslov</label>
+        <label class="label">Naslov<p class="has-text-danger">*</p></label>
         <div class="control">
             <input class="input" type="text" name="ime" placeholder="npr. Upevanje">
         </div>
+        <p class="has-text-danger">
+            {{napake.get("ime")}}
+        </p>
     </div>
 
     <div class="field">

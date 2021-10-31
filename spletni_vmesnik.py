@@ -161,27 +161,36 @@ def skladbe():
 def dodaj_skladbo():
     return bottle.template(
         "dodajanje_skladbe.html",
-        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"), 
+        napake = {}
     )
 
 
 @bottle.post("/dodaj_skladbo/")
 def dodaj_skladbo():
+    moj_model = nalozi_uporabnikov_model()
     naslov = bottle.request.forms.getunicode("naslov")
     avtor = bottle.request.forms.getunicode("avtor")
     link = bottle.request.forms.getunicode("link")
     opombe = bottle.request.forms.getunicode("opombe")
     pazi = bottle.request.forms.getunicode("pazi")
     pdf = bottle.request.forms.getall("pdf")
-    skladba = Skladba(naslov, avtor)
-    skladba.link = link
-    skladba.pazi = pazi
-    skladbe.opombe = opombe
-    skladba.pdf = pdf
-    moj_model = nalozi_uporabnikov_model()
-    moj_model.dodaj_skladbo(skladba)
-    shrani_uporabnikov_model(moj_model)
-    bottle.redirect('/skladbe/')
+    napake = moj_model.preveri_skladbo(naslov, avtor)
+    if napake:
+        return bottle.template(
+            "dodajanje_skladbe.html",
+            uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"), 
+            napake = napake, 
+        )
+    else:
+        skladba = Skladba(naslov, avtor)
+        skladba.link = link
+        skladba.pazi = pazi
+        skladbe.opombe = opombe
+        skladba.pdf = pdf
+        moj_model.dodaj_skladbo(skladba)
+        shrani_uporabnikov_model(moj_model)
+        bottle.redirect('/skladbe/')
 
 
 @bottle.post("/nauceno/")
@@ -242,15 +251,16 @@ def dodaj_dogodek():
             skladbe=moj_model.skladbe, 
             napake = napake, 
         )
-    dogodek = Dogodek(kaj, kdaj, ura, kje)
-    dogodek.opombe = opombe
-    izbira = bottle.request.forms.getall("skladbe_izbira")
-    if izbira:
-        for indeks in izbira:
-            dogodek.skladbe.append(moj_model.skladbe[int(indeks)])
-    moj_model.dodaj_dogodek(dogodek)
-    shrani_uporabnikov_model(moj_model)
-    bottle.redirect('/dogodki/')
+    else:
+        dogodek = Dogodek(kaj, kdaj, ura, kje)
+        dogodek.opombe = opombe
+        izbira = bottle.request.forms.getall("skladbe_izbira")
+        if izbira:
+            for indeks in izbira:
+                dogodek.skladbe.append(moj_model.skladbe[int(indeks)])
+        moj_model.dodaj_dogodek(dogodek)
+        shrani_uporabnikov_model(moj_model)
+        bottle.redirect('/dogodki/')
 
 
 @bottle.post("/izbrisi_dogodek/")
@@ -281,6 +291,7 @@ def dodaj_sklop():
         "dodajanje_sklopov.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         vaje=moj_model.vaje,
+        napake = {}
     )
 
 
@@ -289,14 +300,23 @@ def dodaj_sklop():
     moj_model = nalozi_uporabnikov_model()
     ime = bottle.request.forms.getunicode("ime")
     opis = bottle.request.forms.getunicode("opis")
-    sklop = Sklop_vaj(ime, opis)
-    izbira = bottle.request.forms.getall("vaje_izbira")
-    if izbira:
-        for indeks in izbira:
-            sklop.vaje.append(moj_model.vaje[int(indeks)])
-    moj_model.dodaj_sklop(sklop)
-    shrani_uporabnikov_model(moj_model)
-    bottle.redirect('/sklopi/')
+    napake = moj_model.preveri_sklop(ime, opis)
+    if napake:
+        return bottle.template(
+            "dodajanje_sklopov.html",
+            uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+            vaje=moj_model.vaje,
+            napake = napake, 
+        )
+    else:
+        sklop = Sklop_vaj(ime, opis)
+        izbira = bottle.request.forms.getall("vaje_izbira")
+        if izbira:
+            for indeks in izbira:
+                sklop.vaje.append(moj_model.vaje[int(indeks)])
+        moj_model.dodaj_sklop(sklop)
+        shrani_uporabnikov_model(moj_model)
+        bottle.redirect('/sklopi/')
 
 
 @bottle.post("/izbrisi_sklop/")
@@ -317,17 +337,28 @@ def vaje():
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         vaje=moj_model.vaje if moj_model.vaje else [],
         st_vaj=moj_model.stevilo_vaj(),
+        napake = {},
     )
 
 
 @bottle.post("/dodaj_vajo/")
 def dodaj_vajo():
-    opis = bottle.request.forms.getunicode("opis")
-    vaja = Vaja(opis)
     moj_model = nalozi_uporabnikov_model()
-    moj_model.dodaj_vajo(vaja)
-    shrani_uporabnikov_model(moj_model)
-    bottle.redirect('/vaje/')
+    opis = bottle.request.forms.getunicode("opis")
+    napake = moj_model.preveri_vajo(opis)
+    if napake:
+        return bottle.template(
+            "vaje.html",
+            uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+            vaje=moj_model.vaje if moj_model.vaje else [],
+            st_vaj=moj_model.stevilo_vaj(),
+            napake = napake, 
+        )
+    else:
+        vaja = Vaja(opis)
+        moj_model.dodaj_vajo(vaja)
+        shrani_uporabnikov_model(moj_model)
+        bottle.redirect('/vaje/')
 
 
 @bottle.post("/izbrisi_vajo/")

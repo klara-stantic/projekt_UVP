@@ -3,20 +3,31 @@
 <div class="notification is-primary">
     DODAJANJE SKLADBE
 </div>
-
+<p>Z * označena polja so obvezna.</p>
+<p class="has-text-danger">
+    {{napake.get("skladba")}}
+</p>
 <form method="POST" action="/dodaj_skladbo/" Class="box">
     <div class="field">
         <label class="label">Naslov</label>
+        <p class="has-text-danger">*</p>
         <div class="control">
             <input class="input" type="text" name="naslov" placeholder="npr. Libertango">
         </div>
+        <p class="has-text-danger">
+            {{napake.get("naslov")}}
+        </p>
     </div>
 
     <div class="field">
         <label class="label">Avtor</label>
+        <p class="has-text-danger">*</p>
         <div class="control">
             <input class="input" type="text" name="avtor" placeholder="npr. Astor Piazzolla">
         </div>
+        <p class="has-text-danger">
+            {{napake.get("avtor")}}
+        </p>
     </div>
 
     <div class="field">
@@ -41,9 +52,9 @@
     </div>
 
     <div class="field">
-        <label class="label">Pdf</label>
+        <label class="label">Slike not</label>
         <div class="control">
-            <input multiple class="input" type="file" name="pdf" placeholder="Priloži datoteke">
+            <input multiple class="input" type="file" name="pdf" placeholder="Priloži slike">
         </div>
     </div>
 
