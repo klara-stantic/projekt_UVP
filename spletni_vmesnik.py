@@ -58,7 +58,6 @@ def prijava_post():
 @bottle.post("/odjava/")
 def odjava_post():
     bottle.response.delete_cookie("uporabnisko_ime", path="/")
-    print("Piškotek je bil uspešno pobrisan.")
     bottle.redirect("/")
 
 
