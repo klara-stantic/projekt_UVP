@@ -97,6 +97,13 @@ class Model:
         self.zapiski.append(nov_zapisek)
         if not self.aktualen_zapisek:
             self.aktualen_zapisek = nov_zapisek
+    
+    def preveri_zapisek(self, datum, predmet, ucitelj, vsebina):
+        napake = {}
+        if not predmet:
+            napake["predmet"] = "Ta razdelek je obvezen."
+        return napake
+        
 
     def izbrisi_zapisek(self, zapisek):
         if zapisek == self.aktualen_zapisek:

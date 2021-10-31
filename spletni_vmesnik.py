@@ -102,7 +102,8 @@ def dodaj_zapisek():
     return bottle.template(
         "dodajanje_zapiska.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-        skladbe=moj_model.skladbe
+        skladbe=moj_model.skladbe,
+        napake={},
     )
 
 
@@ -116,7 +117,15 @@ def dodaj_zapisek():
         datum = bottle.request.forms.getunicode("datum")
     else:
         datum = None
-    zapisek = Zapisek(datum, predmet, ucitelj, vsebina)
+    napake = moj_model.preveri_zapisek(datum, predmet, ucitelj, vsebina)
+    if napake:
+        return bottle.template("dodajanje_zapiska.html", napake=napake,
+                               uporabnisko_ime=bottle.request.get_cookie(
+                                   "uporabnisko_ime"),
+                               skladbe=moj_model.skladbe, 
+                               )
+    else:
+        zapisek = Zapisek(datum, predmet, ucitelj, vsebina)
     izbira = bottle.request.forms.getall("skladbe_izbira")
     if izbira:
         for indeks in izbira:
@@ -211,7 +220,7 @@ def dodaj_dogodek():
     moj_model = nalozi_uporabnikov_model()
     return bottle.template(
         "dodajanje_dogodka.html",
-        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"), 
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         skladbe=moj_model.skladbe
     )
 
@@ -229,7 +238,7 @@ def dodaj_dogodek():
     izbira = bottle.request.forms.getall("skladbe_izbira")
     if izbira:
         for indeks in izbira:
-            dogodek.skladbe.append(moj_model.skladbe[int(indeks)])    
+            dogodek.skladbe.append(moj_model.skladbe[int(indeks)])
     moj_model.dodaj_dogodek(dogodek)
     shrani_uporabnikov_model(moj_model)
     bottle.redirect('/dogodki/')
@@ -261,8 +270,8 @@ def dodaj_sklop():
     moj_model = nalozi_uporabnikov_model()
     return bottle.template(
         "dodajanje_sklopov.html",
-        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"), 
-        vaje = moj_model.vaje,
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+        vaje=moj_model.vaje,
     )
 
 
@@ -297,8 +306,8 @@ def vaje():
     return bottle.template(
         "vaje.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-        vaje = moj_model.vaje if moj_model.vaje else [],
-        st_vaj = moj_model.stevilo_vaj(),
+        vaje=moj_model.vaje if moj_model.vaje else [],
+        st_vaj=moj_model.stevilo_vaj(),
     )
 
 
@@ -320,6 +329,7 @@ def izbrisi_vajo():
     moj_model.izbrisi_vajo(vaja)
     shrani_uporabnikov_model(moj_model)
     bottle.redirect("/vaje/")
+
 
 @bottle.error(404)
 def error_404(error):

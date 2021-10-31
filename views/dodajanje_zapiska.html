@@ -3,13 +3,15 @@
 <div class="notification is-primary">
     DODAJANJE ZAPISKA
 </div>
-
 <form method="POST" action="" Class="box">
     <div class="field">
         <label class="label">Predmet</label>
         <div class="control">
             <input class="input" type="text" name="predmet" placeholder="npr. kitara">
         </div>
+        <p class="has-text-danger">
+            {{napake.get("predmet")}}
+        </p>
     </div>
 
     <div class="field">
@@ -38,9 +40,9 @@
         % if skladbe:
         <div class="control">
             <select name="skladbe_izbira" multiple size="4">
-                % for indeks, skladba in enumerate(skladbe): 
-                    <option value={{indeks}}>{{skladba.naslov}}</option>
-                % end                
+                % for indeks, skladba in enumerate(skladbe):
+                <option value={{indeks}}>{{skladba.naslov}}</option>
+                % end
             </select>
         </div>
         % end
@@ -49,8 +51,6 @@
             <a href="/dodaj_skladbo/">Dodaj nove skladbe.</a>
         </p>
     </div>
-
-
 
     <br>
     <div class="columns">
