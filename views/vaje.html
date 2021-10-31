@@ -62,18 +62,24 @@
                 <ul>
                     <li>
                         <p><strong>{{vaja.opis}}</strong></p>
-                        <form method="POST" action="/izbrisi_vajo/">
-                            <div class="field">
-                                <p class="control has-icons-left">
-                                    <input type="hidden" name="indeks" value="{{indeks}}">
-                                    <input class="input is_danger is-rounded is-narrow is-small" type="submit"
-                                        value="Izbriši">
-                                    <span class="icon is-left is-small">
-                                    <i class="fas fa-minus"></i>
-                                    </span>
-                                </p>
+                        <div class="container">
+                            <div class="columns">
+                                <div class="column is-narrow">
+                                    <form method="POST" action="/izbrisi_vajo/">
+                                        <div class="field">
+                                            <p class="control has-icons-left">
+                                                <input type="hidden" name="indeks" value="{{indeks}}">
+                                                <input class="input is-rounded is-danger has-text-danger is-small has-background-danger-light" type="submit"
+                                                    value="Izbriši">
+                                                <span class="icon is-left is-small">
+                                                <i class="fas fa-minus"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </form>
+                        </div>
                     </li>
                 </ul>
                 % end
@@ -85,3 +91,4 @@
         </div>
     </div>
 </div>
+

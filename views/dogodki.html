@@ -52,18 +52,24 @@
                         %end
                     </ul>
                     % end
-                    <form method="POST" action="/izbrisi_dogodek/">
-                        <div class="field">
-                            <p class="control has-icons-left">
-                                <input type="hidden" name="indeks" value="{{indeks}}">
-                                <input class="input is_danger is-rounded is-narrow is-small" type="submit"
-                                    value="Izbriši">
-                                <span class="icon is-left is-small">
-                                    <i class="fas fa-minus"></i>
-                                </span>
-                            </p>
+                    <div class="container">
+                        <div class="columns">
+                            <div class="column is-narrow">
+                                <form method="POST" action="/izbrisi_dogodek/">
+                                    <div class="field">
+                                        <p class="control has-icons-left">
+                                            <input type="hidden" name="indeks" value="{{indeks}}">
+                                            <input class="input has-background-danger-light is-rounded is-danger has-text-danger is-small" type="submit"
+                                                value="Izbriši">
+                                            <span class="icon is-left is-small">
+                                                <i class="fas fa-minus"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
             % else:
@@ -92,18 +98,24 @@
                         %end
                     </ul>
                     %end
-                    <form method="POST" action="/izbrisi_dogodek/">
-                        <div class="field">
-                            <p class="control has-icons-left">
-                                <input type="hidden" name="indeks" value="{{indeks}}">
-                                <input class="input is_danger is-rounded is-narrow is-small" type="submit"
-                                    value="Izbriši">
-                                <span class="icon is-left is-small">
-                                    <i class="fas fa-minus"></i>
-                                </span>
-                            </p>
+                    <div class="container">
+                        <div class="columns">
+                            <div class="column is-4">
+                                <form method="POST" action="/izbrisi_dogodek/">
+                                    <div class="field">
+                                        <p class="control has-icons-left">
+                                            <input type="hidden" name="indeks" value="{{indeks}}">
+                                            <input class="input is_danger is-rounded is-narrow is-small" type="submit"
+                                                value="Izbriši">
+                                            <span class="icon is-left is-small">
+                                                <i class="fas fa-minus"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
             %end
@@ -116,3 +128,4 @@
         %end
     </div>
 </div>
+

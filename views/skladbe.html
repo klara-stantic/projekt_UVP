@@ -17,7 +17,7 @@
 <div class="box">
     <article class="tile is-primary">
         <p class="subtitle">Število vseh skladb: <button class="button is-static is-rounded">
-                {{st_skladb}} </button> 
+                {{st_skladb}} </button>
         </p>
         <br>
     </article>
@@ -32,62 +32,68 @@
     <div class="content">
         <div class="columns is-multiline is-mobile is-centered">
             % if skladbe:
-                % for indeks, skladba in enumerate(skladbe):
-                <div class="column is-4">
-                    <div class="box">
-                        <div class="box has-background-warning-light">
-                            <p><strong>{{skladba.naslov}}</strong>
-                                <br>
-                                <i>{{skladba.avtor}}</i> 
-                                <br>
-                            </p>
-                        </div>
-                        <form method="POST" action="/nauceno/">
-                            <input type="hidden" name="indeks" value="{{indeks}}">
-                            <button class="button is-small is-rounded is-warning">
-                                <hr>Naučeno&nbsp;&nbsp;
-                                    <span class="icon is-small">
-                                        % if skladba.nauceno:
-                                        <i class="far fa-check-square"></i>
-                                        % else:
-                                        <i class="far fa-square"></i>
-                                        % end
-                                    </span>
-                                </hr>
-                            </button>
-                        </form>
-                        <br>
-                        % if skladba.link:
-                        <p><strong>Link:</strong> <a href="{{skladba.link}}">klikni tukaj!</a></p>
-                        % end
-                        % if skladba.opombe:
-                        <p><strong>Opombe:</strong> {{skladba.opombe}}</p>
+            % for indeks, skladba in enumerate(skladbe):
+            <div class="column is-4">
+                <div class="box">
+                    <div class="box has-background-warning-light">
+                        <p><strong>{{skladba.naslov}}</strong>
+                            <br>
+                            <i>{{skladba.avtor}}</i>
+                            <br>
+                        </p>
+                    </div>
+                    <form method="POST" action="/nauceno/">
+                        <input type="hidden" name="indeks" value="{{indeks}}">
+                        <button class="button is-small is-rounded is-warning">
+                            <hr>Naučeno&nbsp;&nbsp;
+                            <span class="icon is-small">
+                                % if skladba.nauceno:
+                                <i class="far fa-check-square"></i>
+                                % else:
+                                <i class="far fa-square"></i>
+                                % end
+                            </span>
+                            </hr>
+                        </button>
+                    </form>
+                    <br>
+                    % if skladba.link:
+                    <p><strong>Link:</strong> <a href="{{skladba.link}}">klikni tukaj!</a></p>
+                    % end
+                    % if skladba.opombe:
+                    <p><strong>Opombe:</strong> {{skladba.opombe}}</p>
+                    %end
+                    % if skladba.pazi:
+                    <p><strong>Pazi:</strong> {{skladba.pazi}} </p>
+                    % end
+                    % if skladba.oznake:
+                    <ul>
+                        % for oznaka in skladba.oznake:
+                        <li>{{oznaka}}</li>
                         %end
-                        % if skladba.pazi:
-                        <p><strong>Pazi:</strong> {{skladba.pazi}} </p>
-                        % end
-                        % if skladba.oznake:
-                        <ul>
-                            % for oznaka in skladba.oznake:
-                            <li>{{oznaka}}</li>
-                            %end
-                        </ul>
-                        % end
-                        <form method="POST" action="/izbrisi_skladbo/">
-                            <div class="field">
-                                <p class="control has-icons-left">
-                                    <input type="hidden" name="indeks" value="{{indeks}}">
-                                    <input class="input is_danger is-rounded is-narrow is-small" type="submit"
-                                        value="Izbriši">
-                                    <span class="icon is-left is-small">
-                                        <i class="fas fa-minus"></i>
-                                    </span>
-                                </p>
+                    </ul>
+                    % end
+                    <div class="container">
+                        <div class="columns">
+                            <div class="column is-narrow">
+                                <form method="POST" action="/izbrisi_skladbo/">
+                                    <div class="field">
+                                        <p class="control has-icons-left">
+                                            <input type="hidden" name="indeks" value="{{indeks}}">
+                                            <input class="input has-background-danger-light is-danger has-text-danger is-rounded is-small" type="submit"
+                                                value="Izbriši">
+                                            <span class="icon is-left is-small">
+                                                <i class="fas fa-minus"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-                % end
+            </div>
+            % end
         </div>
         % else:
         <div>
