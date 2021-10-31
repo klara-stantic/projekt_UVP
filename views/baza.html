@@ -25,8 +25,11 @@
                 <div class="navbar-item">
                     <div class="buttons">
                         % if uporabnisko_ime:
+                        <button class="button is-rounded is-static">
+                            <p>Uporabnik: <strong>{{uporabnisko_ime}}</strong></p>
+                        </button>
                         <form method="POST" action="/odjava/">
-                            <button class="button is-info-light">
+                            <button class="button is-rounded is-info-light">
                                 Odjava
                             </button>
                         </form>
