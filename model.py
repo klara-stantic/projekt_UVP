@@ -257,7 +257,7 @@ class Sklop_vaj:
 
     def __str__(self):
         st_vaj = len(self.vaje)
-        niz = f"Sklop {st_vaj} vaj"
+        niz = f"Sklop {st_vaj} vaj: {self.ime}"
         return niz
 
     def dodaj_vajo(self, vaja):
@@ -309,7 +309,7 @@ class Zapisek:
         self.skladbe = []
 
     def __str__(self):
-        niz = f"""Zapisek lekcije {self.predmet} pri {self.ucitelj} iz dne {self.datum}"""
+        niz = f"""Zapisek lekcije iz dne {self.datum} ({self.predmet})"""
         return niz
 
     def dodaj_skladbo_lekcija(self, skladba):
@@ -383,7 +383,7 @@ class Dogodek:
         self.opombe = opombe
 
     def __str__(self):
-        niz = "{self.kaj}"
+        niz = f"{self.kaj}, {self.kdaj}"
         return niz
 
     def preteklost(self):
