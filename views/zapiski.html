@@ -4,14 +4,7 @@
     <h1 class="title">Zapiski</h1>
 </div>
 
-<div class="block">
-    <button class="button is-rounded is-link is-light">
-        <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-        </span>
-        <a href="/dodaj_zapisek/"> Dodaj zapisek </a>
-    </button>
-</div>
+
 
 <div class="box">
     <article class="tile is-primary">
@@ -20,24 +13,34 @@
         </p>
         <br>
     </article>
+    <div class="block">
+        <button class="button is-rounded is-link is-light">
+            <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+            </span>
+            <a href="/dodaj_zapisek/"> Dodaj zapisek </a>
+        </button>
+    </div>
     <div class="content">
         <div class="columns is-multiline is-mobile is-centered">
             % if zapiski:
                 % for indeks, zapisek in enumerate(zapiski):
                 <div class="column is-4">
-                    <div class="box has-background-primary">
-                        <p><strong>{{zapisek.predmet}}</strong>
-                            <br>
-                            <i>{{zapisek.ucitelj}}</i> 
-                            <br>
-                        </p>
-                        % if zapisek.datum:
-                        <p><strong>Datum:</strong>{{zapisek.datum}}</p>
-                        % end
+                    <div class="box has-background-primary-light">
+                        <div class="box has-background-primary">
+                            <p><strong>{{zapisek.predmet}}</strong>
+                                <br>                         
+                                % if zapisek.datum:
+                                    <p><i>{{zapisek.datum}}</i></p>
+                                % end
+                            </p>
+                        </div>
+                        <p><i>{{zapisek.ucitelj}}</i></p>
                         % if zapisek.vsebina:
                         <p><strong>Vsebina:</strong> {{zapisek.vsebina}}</p>
                         %end
                         % if zapisek.skladbe:
+                        <strong>Skladbe: </strong>
                         <ul>
                             % for skladba in zapisek.skladbe:
                             <li>{{skladba.naslov}}</li>
@@ -48,7 +51,7 @@
                             <div class="field">
                                 <p class="control has-icons-left">
                                     <input type="hidden" name="indeks" value="{{indeks}}">
-                                    <input class="input is_danger is-rounded is-narrow is-small" type="submit"
+                                    <input class="input is_danger is-rounded is-1 is-small" type="submit"
                                         value="Izbriši">
                                     <span class="icon is-left is-small">
                                         <i class="fas fa-minus"></i>

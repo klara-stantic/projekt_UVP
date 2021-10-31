@@ -5,14 +5,7 @@
     <h1 class="title">Dogodki</h1>
 </div>
 
-<div class="block">
-    <button class="button is-rounded is-link is-light">
-        <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-        </span>
-        <a href="/dodaj_dogodek/"> Dodaj dogodek </a>
-    </button>
-</div>
+
 
 <div class="box">
     <article class="tile is-primary">
@@ -21,18 +14,28 @@
         </p>
         <br>
     </article>
+    <div class="block">
+        <button class="button is-rounded is-link is-light">
+            <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+            </span>
+            <a href="/dodaj_dogodek/"> Dodaj dogodek </a>
+        </button>
+    </div>
     <div class="content">
         <div class="columns is-multiline is-mobile is-centered">
             % if dogodki:
             % for indeks, dogodek in enumerate(dogodki):
             % if not dogodek.preteklost() and dogodek.kdaj:
             <div class="column is-4 ">
-                <div class="box has-background-warning">
-                    <p><strong>{{dogodek.kaj}}</strong>
-                        <br>
-                        <i>{{dogodek.kdaj}}</i>
-                        <br>
-                    </p>
+                <div class="box has-background-warning-light">
+                    <div class="box has-background-warning">
+                        <p><strong>{{dogodek.kaj}}</strong>
+                            <br>
+                            <i>{{dogodek.kdaj}}</i>
+                            <br>
+                        </p>
+                    </div>
                     % if dogodek.ura:
                     <p><strong>Ura:</strong> {{dogodek.ura}}</a></p>
                     % end
@@ -65,12 +68,14 @@
             </div>
             % else:
             <div class="column is-4">
-                <div class="box has-background-success">
-                    <p><strong>{{dogodek.kaj}}</strong>
-                        <br>
-                        <i>{{dogodek.kdaj}}</i>
-                        <br>
-                    </p>
+                <div class="box has-background-success-light">
+                    <div class="box has-background-success">
+                        <p><strong>{{dogodek.kaj}}</strong>
+                            <br>
+                            <i>{{dogodek.kdaj}}</i>
+                            <br>
+                        </p>
+                    </div>
                     % if dogodek.ura:
                     <p><strong>Ura:</strong> {{dogodek.ura}}</a></p>
                     % end
