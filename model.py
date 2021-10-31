@@ -6,6 +6,7 @@ import json
 class Model:
     def __init__(self):
         self.sklopi_vaj = []
+        self.vaje = []
         self.aktualen_sklop = None
         self.skladbe = []
         self.aktualna_skladba = None
@@ -41,13 +42,21 @@ class Model:
         self.aktualen_sklop = sklop
 
     def dodaj_vajo(self, vaja):
-        self.aktualen_sklop.dodaj_vajo(vaja)
+        self.vaje.append(vaja)
 
     def izbrisi_vajo(self, vaja):
-        self.aktualen_sklop.izbrisi_vajo(vaja)
+        for sklop in self.sklopi_vaj:
+            if vaja in sklop.vaje:
+                sklop.izbrisi_vajo(vaja)
+        self.vaje.remove(vaja)
 
     def stevilo_sklopov(self):
         return len(self.sklopi_vaj)
+
+    def stevilo_vaj(self):
+        return len(self.vaje)
+
+
 
     # SKLADBE
 
@@ -153,6 +162,7 @@ class Model:
             if self.aktualna_skladba
             else None,
             "sklopi_vaj": [sklop_vaj.v_slovar() for sklop_vaj in self.sklopi_vaj],
+            "vaje": [vaja.v_slovar() for vaja in self.vaje],
             "aktualen_sklop": self.sklopi_vaj.index(self.aktualen_sklop)
             if self.aktualen_sklop
             else None,
@@ -178,6 +188,9 @@ class Model:
             model.aktualna_skladba = model.skladbe[slovar["aktualna_skladba"]]
         model.sklopi_vaj = [
             Sklop_vaj.iz_slovarja(sklop_slovar) for sklop_slovar in slovar["sklopi_vaj"]
+        ]
+        model.vaje = [
+            Vaja.iz_slovarja(vaja_slovar) for vaja_slovar in slovar["vaje"]
         ]
         if slovar["aktualen_sklop"] is not None:
             model.aktualen_sklop = model.sklopi_vaj[slovar["aktualen_sklop"]]
