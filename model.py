@@ -32,7 +32,7 @@ class Model:
         self.sklopi_vaj.append(sklop_vaj)
         if not self.aktualen_sklop:
             self.aktualen_sklop = sklop_vaj
-    
+
     def preveri_sklop(self, ime, opis):
         napake = {}
         if not ime:
@@ -52,7 +52,7 @@ class Model:
 
     def dodaj_vajo(self, vaja):
         self.vaje.append(vaja)
-    
+
     def preveri_vajo(self, opis):
         napake = {}
         if not opis:
@@ -91,7 +91,6 @@ class Model:
             if skladba.naslov == naslov and skladba.avtor == avtor:
                 napake["skladba"] = "Ta skladba je že zasedena"
         return napake
-
 
     def izbrisi_skladbo(self, skladba):
         if skladba == self.aktualna_skladba:
@@ -335,43 +334,6 @@ class Zapisek:
         return zapisek
 
 
-# class Oznaka:
-#    def __init__(self, ime, mapa):
-#        self.ime = ime
-#        self.mapa = mapa  # custom, obdobje, zasedba
-#        self.skladbe = []
-#
-#    def __str__(self):
-#        niz = f"Oznaka {self.ime} v mapi {self.mapa}"
-#        return niz
-#
-#    def dodaj_skladbo(self, skladba):
-#        self.skladbe.append(skladba)
-#
-#    def izbrisi_skladbo(self, skladba):
-#        self.skladbe.remove(skladba)
-#
-#    def stevilo_skladb(self):
-#        return len(self.skladbe)
-#
-#    def v_slovar(self):
-#        return {
-#            "ime": self.ime,
-#            "mapa": self.mapa,
-#            "skladbe": [
-#                skladba.v_slovar() for skladba in self.skladbe
-#            ],
-#        }
-#
-#    @staticmethod
-#    def iz_slovarja(slovar):
-#        oznaka = Oznaka(slovar["ime"], slovar["mapa"])
-#        oznaka.skladbe = [
-#            Skladba.iz_slovarja(skladba_slovar) for skladba_slovar in slovar["skladbe"]
-#        ]
-#        return oznaka
-
-
 class Skladba:
     def __init__(self, naslov, avtor):
         self.naslov = naslov
@@ -383,7 +345,7 @@ class Skladba:
         self.nauceno = False
 
     def __str__(self):
-        niz = f"{self.naslov} avtorja {self.avtor}"
+        niz = f"{self.naslov}, {self.avtor}"
         return niz
 
     def nauci_se(self):
