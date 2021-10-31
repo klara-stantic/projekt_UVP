@@ -5,34 +5,62 @@
     <div class="column">
       <div class="box has-background-info">
         <a class="title" href="/skladbe/">Skladbe <button class="button is-static is-rounded"> {{st_skladb}}
-        </button> </a>
-        % if skladbe:
-        <div class="block"><progress class="progress is-dark is-small" value="{{razmerje}}" max="100">{{razmerje}}%</progress></div>
-        %end
+        </button> </a> <br>
       </div>
+      % if skladbe:
+      <div class="block"><progress class="progress is-dark is-small" value="{{razmerje}}" max="100">{{razmerje}}%</progress></div>
+      <div class="box">
+        <ul>
+          % for skladba in skladbe:
+          <li>{{skladba}}</li>
+          % end
+        </ul>
+      </div>
+      % end
     </div>
     <div class="column">
       <div class="box has-background-success">
         <a class="title" href="/zapiski/">Zapiski <button class="button is-static is-rounded"> {{st_zapiskov}}
           </button> </a>
       </div>
+      % if zapiski:
+      <div class="box">
+        <ul>
+          % for zapisek in zapiski:
+          <li>{{zapisek}}</li>
+          % end
+        </ul>
+      </div>
+      % end
     </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="columns">
     <div class="column">
       <div class="box has-background-warning">
         <a class="title" href="/dogodki/">Dogodki <button class="button is-static is-rounded"> {{st_dogodkov}}
           </button> </a>
       </div>
+      % if dogodki:
+      <div class="box">
+        <ul>
+          % for dogodek in dogodki:
+          <li>{{dogodek}}</li>
+          % end
+        </ul>
+      </div>
+      % end
     </div>
     <div class="column">
       <div class="box has-background-link">
         <a class="title" href="/sklopi/">Zbirka vaj <button class="button is-static is-rounded"> {{st_sklopov}}
           </button> </a>
       </div>
-    </div>
+      % if sklopi:
+      <div class="box">
+        <ul>
+          % for sklop in sklopi:
+          <li>{{sklop}}</li>
+          % end
+        </ul>
+      </div>
+      % end
   </div>
 </div>
