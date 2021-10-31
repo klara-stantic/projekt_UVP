@@ -221,7 +221,8 @@ def dodaj_dogodek():
     return bottle.template(
         "dodajanje_dogodka.html",
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
-        skladbe=moj_model.skladbe
+        skladbe=moj_model.skladbe, 
+        napake = {}
     )
 
 
@@ -233,6 +234,14 @@ def dodaj_dogodek():
     kje = bottle.request.forms.getunicode("kje")
     ura = bottle.request.forms.getunicode("ura")
     opombe = bottle.request.forms.getunicode("opombe")
+    napake = moj_model.preveri_dogodek(kaj, kdaj, ura, kje, opombe)
+    if napake:
+        return bottle.template(
+            "dodajanje_dogodka.html",
+            uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+            skladbe=moj_model.skladbe, 
+            napake = napake, 
+        )
     dogodek = Dogodek(kaj, kdaj, ura, kje)
     dogodek.opombe = opombe
     izbira = bottle.request.forms.getall("skladbe_izbira")

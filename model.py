@@ -56,8 +56,6 @@ class Model:
     def stevilo_vaj(self):
         return len(self.vaje)
 
-
-
     # SKLADBE
 
     def dodaj_skladbo(self, skladba):
@@ -97,13 +95,12 @@ class Model:
         self.zapiski.append(nov_zapisek)
         if not self.aktualen_zapisek:
             self.aktualen_zapisek = nov_zapisek
-    
+
     def preveri_zapisek(self, datum, predmet, ucitelj, vsebina):
         napake = {}
         if not predmet:
             napake["predmet"] = "Ta razdelek je obvezen."
         return napake
-        
 
     def izbrisi_zapisek(self, zapisek):
         if zapisek == self.aktualen_zapisek:
@@ -122,6 +119,14 @@ class Model:
         self.dogodki.append(dogodek)
         if not self.aktualen_dogodek:
             self.aktualen_dogodek = dogodek
+
+    def preveri_dogodek(self, kaj, kdaj, ura, kje, opombe):
+        napake = {}
+        if not kaj:
+            napake["kaj"] = "Ta razdelek je obvezen."
+        if not kaj:
+            napake["kdaj"] = "Ta razdelek je obvezen."
+        return napake
 
     def izbrisi_dogodek(self, dogodek):
         if dogodek == self.aktualen_dogodek:

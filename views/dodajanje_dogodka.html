@@ -2,21 +2,30 @@
 
 <div class="notification is-primary">
     DODAJANJE DOGODKA
+    <p>Z * označena polja so obvezna.</p>
 </div>
 
 <form method="POST" action="" Class="box">
     <div class="field">
         <label class="label">Naslov dogodka</label>
+        <p class="has-text-danger">*</p>
         <div class="control">
             <input class="input" type="text" name="kaj" placeholder="npr. Nastop">
         </div>
+        <p class="has-text-danger">
+            {{napake.get("kaj")}}
+        </p>
     </div>
 
     <div class="field">
         <label class="label">Datum</label>
+        <p class="has-text-danger">*</p>
         <div class="control">
             <input class="input" type="date" name="kdaj" placeholder="npr. 2020-11-21">
         </div>
+        <p class="has-text-danger">
+            {{napake.get("kdaj")}}
+        </p>
     </div>
 
     <div class="field">
