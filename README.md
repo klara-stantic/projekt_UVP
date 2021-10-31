@@ -9,7 +9,7 @@ V njej najdete prostor za shranjevanje podatkov o skladbah in dogodkih, prav tak
 ## Navodila za zagon 
 Na računalniku potrebujete nameščen <a href="https://www.python.org/"> Python </a>! Poskrbite tudi za internetno povezavo. 
 
-Iz Git repozitorija si prenesite datoteke in zaženite spletni_vmesnik.py. V terminalu se vam bodo izpisala kratka navodila in link, na katerem se nahaja repozitorij. Sledite linku in pričnite z uporabo. 
+Iz Git repozitorija si prenesite datoteke in zaženite spletni_vmesnik.py. V terminalu se vam bodo izpisala kratka navodila in link, na katerem se nahaja repozitorij. Sledite linku in pričnite z uporabo. (Na voljo vam je tudi tekstovni vmesnik, ki pa deluje nekoliko drugače.)
 
 Pozor - med uporabo se vam bo za vsakega uporabnika ustvarila ena .json datoteka. Če te mape urejate sami morate biti pozorni, saj se hitro poruši struktura zapisa in program ne zna več prebrati podatkov iz nje. Če se to zgodi vam je lahko v pomoč osnova.json.
 
