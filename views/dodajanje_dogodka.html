@@ -3,8 +3,11 @@
 <div class="notification is-primary">
     DODAJANJE DOGODKA
 </div>
-<p>Z * označena polja so obvezna.</p>
-<form method="POST" action="" Class="box">
+<div>
+    <p>Z * označena polja so obvezna.</p>
+</div>
+
+<form method="POST" action="" Class="column is-4">
     <div class="field">
         <label class="label">Naslov dogodka<p class="has-text-danger">*</p></label>
         <div class="control">
@@ -51,7 +54,7 @@
         <label class="label">Skladbe</label>
         % if skladbe:
         <div class="control">
-            <select name="skladbe_izbira" multiple size="4">
+            <select name="skladbe_izbira" multiple="multiple" size="4">
                 % for indeks, skladba in enumerate(skladbe):
                 <option value={{indeks}}>{{skladba.naslov}}</option>
                 % end
@@ -66,7 +69,7 @@
 
     <br>
     <div class="columns">
-        <div class="column is-2">
+        <div class="column">
             <div class="control">
                 <button class="button is-link">
                     <imput type="submit">
@@ -75,7 +78,7 @@
                 </button>
             </div>
         </div>
-        <div class="column is-2">
+        <div class="column">
             <div class="control">
                 <a class="button is-link is-light" href="/vaje/">Prekliči</a>
             </div>
